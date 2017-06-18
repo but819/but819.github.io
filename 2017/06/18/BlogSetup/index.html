@@ -4,7 +4,7 @@
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     
-    <title>我的博客-搭建过程 | b_ut</title>
+    <title>新的博客，新的开始 | b_ut</title>
     <meta name="renderer" content="webkit">
     <meta name="HandheldFriendly" content="True">
     <meta name="MobileOptimized" content="320">
@@ -15,11 +15,11 @@
     <meta name="description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
 
     <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="我的博客-搭建过程 | b_ut">
+    <meta name="twitter:title" content="新的博客，新的开始 | b_ut">
     <meta name="twitter:description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
 
     <meta property="og:type" content="article">
-    <meta property="og:title" content="我的博客-搭建过程 | b_ut">
+    <meta property="og:title" content="新的博客，新的开始 | b_ut">
     <meta property="og:description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
 
     
@@ -132,15 +132,18 @@
       </span> 
    
     </div>
-    <h1 class="post-title">我的博客-搭建过程</h1>
+    <h1 class="post-title">新的博客，新的开始</h1>
   </header>
 
   <section class="post">
-    <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>很高心，终于搭建了自己博客了。作为第一篇文章，就写一下搭建的过程吧(Mac OS)。</p>
+    <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>很高心，终于搭建了自己博客了。作为第一篇文章，就写一下搭建的过程吧(Mac OS)，以及一些扩展的东西。</p>
 <h3 id="2-预览"><a href="#2-预览" class="headerlink" title="2.预览"></a>2.预览</h3><p>相信iOS行内人对<a href="https://onevcat.com/" target="_blank" rel="external">喵神</a>已经不陌生了，然后本文博客也是沿用他的主题。</p>
-<div align="center"><br><img src="/2017/06/18/BlogSetup/onevcat.png"><br></div>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/onevcat.png" width="90%" height="90%"><br></div>
 
-<h3 id="3-主要流程"><a href="#3-主要流程" class="headerlink" title="3.主要流程"></a>3.主要流程</h3><ul>
+<h3 id="3-概要"><a href="#3-概要" class="headerlink" title="3.概要"></a>3.概要</h3><blockquote>
+<p>搭建部分</p>
+</blockquote>
+<ul>
 <li>Github<ul>
 <li>注册账号</li>
 <li>创建一个博客仓库</li>
@@ -160,12 +163,26 @@
 </ul>
 </li>
 </ul>
+<blockquote>
+<p>额外部分</p>
+</blockquote>
+<ul>
+<li>个性化配置博客<ul>
+<li>Hexo的基础配置</li>
+<li>主题的配置</li>
+</ul>
+</li>
+<li>使用Hexo插件<ul>
+<li>读取本地图片(hexo-asset-image)</li>
+</ul>
+</li>
+</ul>
 <h3 id="4-Github"><a href="#4-Github" class="headerlink" title="4.Github"></a>4.Github</h3><h4 id="4-1注册账号"><a href="#4-1注册账号" class="headerlink" title="4.1注册账号"></a>4.1注册账号</h4><p>这个不作太多介绍了，直接到官网注册一个<a href="https://github.com/" target="_blank" rel="external">Github</a>的账号即可。</p>
 <h4 id="4-2创建一个博客仓库"><a href="#4-2创建一个博客仓库" class="headerlink" title="4.2创建一个博客仓库"></a>4.2创建一个博客仓库</h4><p>我们登录Github后在首页点击New repository创建一个新的仓库, 用于储存博客的所有信息。</p>
 <ul>
 <li>Repository name格式：userName.github.io，userName就是左边Owner的名字</li>
 </ul>
-<div align="center"><br><img src="/2017/06/18/BlogSetup/github.png"><br></div>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/github.png" width="90%" height="90%"><br></div>
 
 <h3 id="5-环境配置"><a href="#5-环境配置" class="headerlink" title="5.环境配置"></a>5.环境配置</h3><h4 id="5-1安装Git"><a href="#5-1安装Git" class="headerlink" title="5.1安装Git"></a>5.1安装Git</h4><ul>
 <li><a href="https://itunes.apple.com/cn/app/xcode/id497799835?mt=12" target="_blank" rel="external">Xcode</a>自带Git</li>
@@ -203,9 +220,9 @@
 <blockquote>
 <p>浏览器访问<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a></p>
 </blockquote>
-<div align="center"><br><img src="/2017/06/18/BlogSetup/initHexo.png"><br></div>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/initHexo.png" width="90%" height="90%"><br></div>
 
-<h4 id="6-2配置博客"><a href="#6-2配置博客" class="headerlink" title="6.2配置博客"></a>6.2配置博客</h4><p>在个性化的时代下，大家都会搞些个性化的处理。这里先简单的聊聊，下篇文章再细聊。</p>
+<h4 id="6-2配置博客"><a href="#6-2配置博客" class="headerlink" title="6.2配置博客"></a>6.2配置博客</h4><p>在个性化的时代下，大家都会搞些个性化的处理。这里先简单的聊聊，后面的部分会聊到。</p>
 <blockquote>
 <p>安装主题</p>
 </blockquote>
@@ -214,13 +231,13 @@
 <blockquote>
 <p>使用主题</p>
 </blockquote>
-<p>到<strong>Blog根文件夹</strong>中找到<strong>_config.yml</strong>文件，打开编辑保存。<strong>注意在所有属性冒号后边一定要追加一个空格</strong>。</p>
+<p>配置<strong>Blog下</strong>的<strong>_config.yml</strong>属性，打开编辑保存。<strong>注意在所有属性冒号后边一定要追加一个空格</strong>。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: vno</div></pre></td></tr></table></figure>
 <blockquote>
 <p>开启hexo本地服务器 </p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
-<div align="center"><br><img src="/2017/06/18/BlogSetup/hexo-theme-new-vno.png"><br></div>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/hexo-theme-new-vno.png" width="90%" height="90%"><br></div>
 
 <h4 id="6-3写个文章"><a href="#6-3写个文章" class="headerlink" title="6.3写个文章"></a>6.3写个文章</h4><blockquote>
 <p>使用主题</p>
@@ -228,6 +245,10 @@
 <p>执行以下命令后，我们发现刚才的<strong>Blog/source/_posts</strong>下多了一个<strong>firstBlog.md</strong>文件。这就是我们的新文章了，内容先不编辑。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new &quot;firstBlog&quot;</div></pre></td></tr></table></figure>
 <h4 id="6-4发布博客"><a href="#6-4发布博客" class="headerlink" title="6.4发布博客"></a>6.4发布博客</h4><p>到了最重要的一点了，把弄好的博客放到Github上。</p>
+<blockquote>
+<p>配置Blog下的_config.yml发布信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">   //发布形式</div><div class="line">   type: git</div><div class="line">   //第一步建好的Github博客仓库</div><div class="line">   repo: https://github.com/userName/userName.github.io.git</div></pre></td></tr></table></figure>
 <blockquote>
 <p>安装自动部署发布工具</p>
 </blockquote>
@@ -239,11 +260,38 @@
 <blockquote>
 <p>访问博客</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">链接格式：https://xxxx.github.io/</div><div class="line">xxxx为Github的Owner名字</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">链接格式：https://userName.github.io/</div></pre></td></tr></table></figure>
+<h3 id="7-个性化配置博客"><a href="#7-个性化配置博客" class="headerlink" title="7.个性化配置博客"></a>7.个性化配置博客</h3><p>刚才我们已经搭建起自己的博客了，但是我们希望会有更多的个性化元素在自己的博客里面。</p>
+<h4 id="7-1Hexo的基础配置"><a href="#7-1Hexo的基础配置" class="headerlink" title="7.1Hexo的基础配置"></a>7.1Hexo的基础配置</h4><p>打开<strong>Blog下</strong>的<strong>_config.yml</strong>会发现有很多很多的属性，除了上面的设的主题和发布信息，我还设了网站的一些基本信息。但是Hexo官网上有更详细的<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">介绍</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//网站标题</div><div class="line">title: b_ut</div><div class="line">//网站副标题</div><div class="line">subtitle: </div><div class="line">//网站描述</div><div class="line">description: XXXXXXX</div><div class="line">//作者</div><div class="line">author: b_ut</div></pre></td></tr></table></figure>
+<h4 id="7-2主题的配置"><a href="#7-2主题的配置" class="headerlink" title="7.2主题的配置"></a>7.2主题的配置</h4><p>打开<strong>Blog/themes/vno下</strong>同样也有一个<strong>_config.yml</strong>文件，这个就是对应主题的配置文件。以下的内容仅限于hexo-theme-new-vno主题的配置，其他主题有对应的配置描述。</p>
 <blockquote>
-<p>Enjoy</p>
+<p>menu配置(首页的菜单)</p>
 </blockquote>
-
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">menu:</div><div class="line">  黄金屋: /favourite</div><div class="line">  时光机: /favourite/time.html</div><div class="line">  我是: /aboutme</div></pre></td></tr></table></figure>
+<blockquote>
+<p>menu创建</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new page &quot;favourite&quot;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>图片的配置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//首页logo</div><div class="line">logo: /images/avatar.png</div><div class="line">background:</div><div class="line">  //首页背景</div><div class="line">  cover: /images/background-cover.png</div><div class="line">  //覆盖层颜色</div><div class="line">  color: cover-slate</div><div class="line">//网址的图标</div><div class="line">favicon: /images/avatar.png</div></pre></td></tr></table></figure>
+<h3 id="8-使用Hexo插件"><a href="#8-使用Hexo插件" class="headerlink" title="8.使用Hexo插件"></a>8.使用Hexo插件</h3><p>Hexo提供的插件有很多，刚开始用的不多，以后有用到其他的话再继续更新。</p>
+<h4 id="8-1读取本地图片-hexo-asset-image"><a href="#8-1读取本地图片-hexo-asset-image" class="headerlink" title="8.1读取本地图片(hexo-asset-image)"></a>8.1读取本地图片(hexo-asset-image)</h4><p>有一个问题就是，我们并不希望博文里的图片总是需要链接。而我们又要一张张的上传，拿到链接，再放到博文里面。这样太累了。于是找到了一个能读取本地文件夹插件。</p>
+<blockquote>
+<p>安装插件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-asset-image --save</div></pre></td></tr></table></figure>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<p>修改<strong>Blog下</strong>的<strong>_config.yml</strong>属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">post_asset_folder: true</div></pre></td></tr></table></figure>
+<p>比如说我们新建一个博文后，你会发现目录下多了一个firstBlog的文件夹，这就是图片存放的地方了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new &quot;firstBlog&quot;</div></pre></td></tr></table></figure>
+<p>博文中的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//文件目录</div><div class="line">firstBlog</div><div class="line">├── apppicker.jpg</div><div class="line">├── logo.jpg</div><div class="line">└── rules.jpg</div><div class="line">firstBlog.md</div><div class="line">//firstBlo中图片的引入</div><div class="line">![logo](firstBlog/logo.jpg)</div></pre></td></tr></table></figure>
   </section>
 
 </article>
