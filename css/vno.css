@@ -6011,9 +6011,6 @@ h4 {
 h5 {
   font-size: 1em;
 }
-p {
-  line-height: 1.7em;
-}
 strong {
   font-weight: bold;
 }
@@ -6225,7 +6222,7 @@ i.fa.fa-spinner.fa-spin {
   margin: 0 auto;
   border-radius: 3px;
   text-align: center;
-  display: block;
+  display: inline;
 }
 .post pre {
   width: 95%;
