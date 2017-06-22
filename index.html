@@ -1,215 +1,782 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
-    <meta charset="utf-8"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
     
-    <title>b_ut</title>
-    <meta name="renderer" content="webkit">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <meta name="description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
-
-    <meta name="twitter:card" content="summary">
-    <meta name="twitter:title" content="b_ut">
-    <meta name="twitter:description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
-
-    <meta property="og:type" content="article">
-    <meta property="og:title" content="b_ut">
-    <meta property="og:description" content="一名普通的iOS开发者&lt;br&gt;一直追求简单而又简洁的感觉">
-
     
-    <meta name="author" content="b_ut">
-    
-    <link rel="stylesheet" href="/css/vno.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css">
+  
 
-    
-    <link rel="icon" href="/images/avatar.png">
-    
+  
 
-    <meta name="generator" content="hexo"/>
+  
+
+  
+
+  
+
+  
     
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
 
-    <link rel="canonical" href="http://yoursite.com"/>
 
-                 
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="一名普通的iOS开发者一直追求简单而又简洁的感觉">
+<meta property="og:type" content="website">
+<meta property="og:title" content="b_ut">
+<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="一名普通的iOS开发者一直追求简单而又简洁的感觉">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="b_ut">
+<meta name="twitter:description" content="一名普通的iOS开发者一直追求简单而又简洁的感觉">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/"/>
+
+
+
+
+
+  <title>b_ut</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </head>
 
-<body class="home-template no-js">
-    <script src="//cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
-    <script src="/js/main.js"></script>
-    <span class="mobile btn-mobile-menu">
-        <i class="fa fa-list btn-mobile-menu__icon"></i>
-        <i class="fa fa-angle-up btn-mobile-close__icon hidden"></i>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left 
+   page-home 
+ ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+  <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/06/18/BlogSetup/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
     </span>
 
     
-<header class="panel-cover " style="background-image: url(/images/background-cover.jpeg)">
-  <div class="panel-main">
-    <div class="panel-main__inner panel-inverted">
-    <div class="panel-main__content">
+      <header class="post-header">
 
-        <a href="/" title="前往 b_ut 的主页"><img src="/images/avatar.png" width="80" alt="b_ut logo" class="panel-cover__logo logo" /></a>
-        <h1 class="panel-cover__title panel-title"><a href="/" title="link to homepage for b_ut">b_ut</a></h1>
         
-        <hr class="panel-cover__divider" />
-        <p class="panel-cover__description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
-        <hr class="panel-cover__divider panel-cover__divider--secondary" />
-
-        <div class="navigation-wrapper">
-          <div>
-          <nav class="cover-navigation cover-navigation--primary">
-            <ul class="navigation">
-              <li class="navigation__item"><a href="/#blog" title="访问博客" class="blog-button">博客</a></li>
-            
-              <li class="navigation__item"><a href="/production">作品</a></li>
-            
-              <li class="navigation__item"><a href="/about">关于</a></li>
-            
-            </ul>
-          </nav>
-          </div>
-          <div>
-          <nav class="cover-navigation navigation--social">
-  <ul class="navigation">
-
-  <!-- Weibo-->
-  
-
-  <!-- Github -->
-  
-  <li class="navigation__item">
-    <a href="https://github.com/but819" title="查看我的GitHub主页" target="_blank">
-      <i class='social fa fa-github'></i>
-      <span class="label">Github</span>
-    </a>
-  </li>
-
-
-<!-- Stack Overflow -->
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/06/18/BlogSetup/" itemprop="url">Github+Hexo的博客</a></h1>
         
 
-  <!-- Google Plus -->
-  
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-18T19:40:29+08:00">
+                2017-06-18
+              </time>
+            
 
-<!-- Facebook -->
+            
 
-  
-<!-- Twitter -->
+            
+          </span>
 
-  
+          
 
+          
+            
+          
 
+          
+          
 
-  </ul>
-</nav>
+          
 
-          </div>
+          
+
+          
+
         </div>
+      </header>
+    
 
-      </div>
+    <div class="post-body" itemprop="articleBody">
 
+      
+      
+
+      
+        
+          
+            <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>很高心，终于搭建了自己博客了。作为第一篇文章，就写一下搭建的过程吧(Mac OS)，以及一些扩展的东西。</p>
+<h3 id="2-预览"><a href="#2-预览" class="headerlink" title="2.预览"></a>2.预览</h3><p>相信iOS行内人对<a href="https://onevcat.com/" target="_blank" rel="external">喵神</a>已经不陌生了，然后本文博客也是沿用他的主题。</p>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/onevcat.png" width="90%" height="90%"><br></div>
+
+<h3 id="3-概要"><a href="#3-概要" class="headerlink" title="3.概要"></a>3.概要</h3><blockquote>
+<p>搭建部分</p>
+</blockquote>
+<ul>
+<li>Github<ul>
+<li>注册账号</li>
+<li>创建一个博客仓库</li>
+</ul>
+</li>
+<li>环境配置<ul>
+<li>安装Git</li>
+<li>安装Node.js</li>
+<li>安装Hexo</li>
+</ul>
+</li>
+<li>使用Hexo<ul>
+<li>创建博客</li>
+<li>配置博客</li>
+<li>写个文章</li>
+<li>发布博客</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>额外部分</p>
+</blockquote>
+<ul>
+<li>个性化配置博客<ul>
+<li>Hexo的基础配置</li>
+<li>主题的配置</li>
+</ul>
+</li>
+<li>使用Hexo插件<ul>
+<li>读取本地图片(hexo-asset-image)</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-Github"><a href="#4-Github" class="headerlink" title="4.Github"></a>4.Github</h3><h4 id="4-1注册账号"><a href="#4-1注册账号" class="headerlink" title="4.1注册账号"></a>4.1注册账号</h4><p>这个不作太多介绍了，直接到官网注册一个<a href="https://github.com/" target="_blank" rel="external">Github</a>的账号即可。</p>
+<h4 id="4-2创建一个博客仓库"><a href="#4-2创建一个博客仓库" class="headerlink" title="4.2创建一个博客仓库"></a>4.2创建一个博客仓库</h4><p>我们登录Github后在首页点击New repository创建一个新的仓库, 用于储存博客的所有信息。</p>
+<ul>
+<li>Repository name格式：userName.github.io，userName就是左边Owner的名字</li>
+</ul>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/github.png" width="90%" height="90%"><br></div>
+
+<h3 id="5-环境配置"><a href="#5-环境配置" class="headerlink" title="5.环境配置"></a>5.环境配置</h3><h4 id="5-1安装Git"><a href="#5-1安装Git" class="headerlink" title="5.1安装Git"></a>5.1安装Git</h4><ul>
+<li><a href="https://itunes.apple.com/cn/app/xcode/id497799835?mt=12" target="_blank" rel="external">Xcode</a>自带Git</li>
+<li><a href="https://git-scm.com/downloads" target="_blank" rel="external">Git</a>官网下载安装</li>
+</ul>
+<h4 id="5-2安装Node-js"><a href="#5-2安装Node-js" class="headerlink" title="5.2安装Node.js"></a>5.2安装Node.js</h4><ul>
+<li><a href="https://nodejs.org/en/" target="_blank" rel="external">Node.js</a>官网下载安装</li>
+</ul>
+<h4 id="5-3安装Hexo"><a href="#5-3安装Hexo" class="headerlink" title="5.3安装Hexo"></a>5.3安装Hexo</h4><p>Git跟Node.js都安装好后就来安装最重要的Hexo了。跑到系统自带的终端输入以下命令</p>
+<blockquote>
+<p>sudo安装hexo</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ sudo npm install -g hexo</div></pre></td></tr></table></figure>
+<h3 id="6-使用Hexo"><a href="#6-使用Hexo" class="headerlink" title="6.使用Hexo"></a>6.使用Hexo</h3><p>Hexo是一个快速、简洁且高效的博客框架(官网)。</p>
+<h4 id="6-1创建博客"><a href="#6-1创建博客" class="headerlink" title="6.1创建博客"></a>6.1创建博客</h4><blockquote>
+<p>cd到一个你准备放置博客的文件夹</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ cd Blog</div></pre></td></tr></table></figure>
+<blockquote>
+<p>Blog文件夹初始化hexo</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init Blog</div></pre></td></tr></table></figure>
+<blockquote>
+<p>安装博客依赖库 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install</div></pre></td></tr></table></figure>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/hexoFloder.png" width="90%" height="90%"><br></div>
+
+<center>Blog文件目录</center>
+
+<blockquote>
+<p>开启hexo本地服务器 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
+<blockquote>
+<p>浏览器访问<a href="http://localhost:4000" target="_blank" rel="external">http://localhost:4000</a></p>
+</blockquote>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/initHexo.png" width="90%" height="90%"><br></div>
+
+<h4 id="6-2配置博客"><a href="#6-2配置博客" class="headerlink" title="6.2配置博客"></a>6.2配置博客</h4><p>在个性化的时代下，大家都会搞些个性化的处理。这里先简单的聊聊，后面的部分会聊到。</p>
+<blockquote>
+<p>安装主题</p>
+</blockquote>
+<p><a href="https://github.com/monniya/hexo-theme-new-vno" target="_blank" rel="external">链接</a>是喵神风格的主题，Hexo官方还有<a href="https://hexo.io/themes/" target="_blank" rel="external">更多</a>主题选择。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ cd Blog</div><div class="line">$ git clone https://github.com/monniya/hexo-theme-new-vno themes/vno</div></pre></td></tr></table></figure>
+<blockquote>
+<p>使用主题</p>
+</blockquote>
+<p>配置<strong>Blog下</strong>的<strong>_config.yml</strong>属性，打开编辑保存。<strong>注意在所有属性冒号后边一定要追加一个空格</strong>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">theme: vno</div></pre></td></tr></table></figure>
+<blockquote>
+<p>开启hexo本地服务器 </p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo s</div></pre></td></tr></table></figure>
+<div align="center"><br><img src="/2017/06/18/BlogSetup/hexo-theme-new-vno.png" width="90%" height="90%"><br></div>
+
+<h4 id="6-3写个文章"><a href="#6-3写个文章" class="headerlink" title="6.3写个文章"></a>6.3写个文章</h4><blockquote>
+<p>使用主题</p>
+</blockquote>
+<p>执行以下命令后，我们发现刚才的<strong>Blog/source/_posts</strong>下多了一个<strong>firstBlog.md</strong>文件。这就是我们的新文章了，内容先不编辑。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new &quot;firstBlog&quot;</div></pre></td></tr></table></figure>
+<h4 id="6-4发布博客"><a href="#6-4发布博客" class="headerlink" title="6.4发布博客"></a>6.4发布博客</h4><p>到了最重要的一点了，把弄好的博客放到Github上。</p>
+<blockquote>
+<p>配置Blog下的_config.yml发布信息</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">deploy:</div><div class="line">   //发布形式</div><div class="line">   type: git</div><div class="line">   //第一步建好的Github博客仓库</div><div class="line">   repo: https://github.com/userName/userName.github.io.git</div></pre></td></tr></table></figure>
+<blockquote>
+<p>安装自动部署发布工具</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-deployer-git --save</div></pre></td></tr></table></figure>
+<blockquote>
+<p>发布博客</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</div></pre></td></tr></table></figure>
+<blockquote>
+<p>访问博客</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">链接格式：https://userName.github.io/</div></pre></td></tr></table></figure>
+<h3 id="7-个性化配置博客"><a href="#7-个性化配置博客" class="headerlink" title="7.个性化配置博客"></a>7.个性化配置博客</h3><p>刚才我们已经搭建起自己的博客了，但是我们希望会有更多的个性化元素在自己的博客里面。</p>
+<h4 id="7-1Hexo的基础配置"><a href="#7-1Hexo的基础配置" class="headerlink" title="7.1Hexo的基础配置"></a>7.1Hexo的基础配置</h4><p>打开<strong>Blog下</strong>的<strong>_config.yml</strong>会发现有很多很多的属性，除了上面的设的主题和发布信息，我还设了网站的一些基本信息。但是Hexo官网上有更详细的<a href="https://hexo.io/zh-cn/docs/configuration.html" target="_blank" rel="external">介绍</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//网站标题</div><div class="line">title: b_ut</div><div class="line">//网站副标题</div><div class="line">subtitle: </div><div class="line">//网站描述</div><div class="line">description: XXXXXXX</div><div class="line">//作者</div><div class="line">author: b_ut</div></pre></td></tr></table></figure>
+<h4 id="7-2主题的配置"><a href="#7-2主题的配置" class="headerlink" title="7.2主题的配置"></a>7.2主题的配置</h4><p>打开<strong>Blog/themes/vno下</strong>同样也有一个<strong>_config.yml</strong>文件，这个就是对应主题的配置文件。以下的内容仅限于hexo-theme-new-vno主题的配置，其他主题有对应的配置描述。</p>
+<blockquote>
+<p>menu配置(首页的菜单)</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">menu:</div><div class="line">  黄金屋: /favourite</div><div class="line">  时光机: /favourite/time.html</div><div class="line">  我是: /aboutme</div></pre></td></tr></table></figure>
+<blockquote>
+<p>menu创建</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new page &quot;favourite&quot;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>图片的配置</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//首页logo</div><div class="line">logo: /images/avatar.png</div><div class="line">background:</div><div class="line">  //首页背景</div><div class="line">  cover: /images/background-cover.png</div><div class="line">  //覆盖层颜色</div><div class="line">  color: cover-slate</div><div class="line">//网址的图标</div><div class="line">favicon: /images/avatar.png</div></pre></td></tr></table></figure>
+<h3 id="8-使用Hexo插件"><a href="#8-使用Hexo插件" class="headerlink" title="8.使用Hexo插件"></a>8.使用Hexo插件</h3><p>Hexo提供的插件有很多，刚开始用的不多，以后有用到其他的话再继续更新。</p>
+<h4 id="8-1读取本地图片-hexo-asset-image"><a href="#8-1读取本地图片-hexo-asset-image" class="headerlink" title="8.1读取本地图片(hexo-asset-image)"></a>8.1读取本地图片(hexo-asset-image)</h4><p>有一个问题就是，我们并不希望博文里的图片总是需要链接。而我们又要一张张的上传，拿到链接，再放到博文里面。这样太累了。于是找到了一个能读取本地文件夹插件。</p>
+<blockquote>
+<p>安装插件</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ npm install hexo-asset-image --save</div></pre></td></tr></table></figure>
+<blockquote>
+<p>例子</p>
+</blockquote>
+<p>修改<strong>Blog下</strong>的<strong>_config.yml</strong>属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">post_asset_folder: true</div></pre></td></tr></table></figure>
+<p>比如说我们新建一个博文后，你会发现目录下多了一个firstBlog的文件夹，这就是图片存放的地方了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new &quot;firstBlog&quot;</div></pre></td></tr></table></figure>
+<p>博文中的使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//文件目录</div><div class="line">firstBlog</div><div class="line">├── apppicker.jpg</div><div class="line">├── logo.jpg</div><div class="line">└── rules.jpg</div><div class="line">firstBlog.md</div><div class="line">//firstBlo中图片的引入</div><div class="line">![logo](firstBlog/logo.jpg)</div></pre></td></tr></table></figure>
+          
+        
+      
     </div>
 
-    <div class="panel-cover--overlay cover-slate"></div>
-  </div> 
-</header>
+    <div>
+      
+    </div>
 
-    <div class="content-wrapper">
-        <div class="content-wrapper__inner">
-            <div class="main-post-list">
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
     
-  <ol class="post-list">
+  </section>
+
   
-    
-    <li>
-      <h2 class="post-list__post-title post-title"><a href="/2017/06/18/BlogSetup/" title="link to post.title">Github+Hexo的博客</a></h2>
-      <p class="excerpt">
-    
-      1.前言很高心，终于搭建了自己博客了。作为第一篇文章，就写一下搭建的过程吧(Mac OS)，以及一些扩展的东西。
-2.预览相信iOS行内人对喵神已经不陌生了，然后本文博客也是沿用他的主题。
 
 
-3.概要
-搭建部分
+          </div>
+          
 
 
-Github
-注册账号
-创建一个博客仓库
+          
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: '',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
 
-
-环境配置
-安装Git
-安装Node.js
-安装Hexo
-
-
-使用Hexo
-创建博客
-配置博客
-写个文章
-发布博客
-
-
-
-
-额外部分
-
-
-
-    &hellip;
-      </p>
-      <div class="post-list__meta"><time datetime="2017-06-18T11:40:29.000Z" class="post-list__meta--date date">2017-06-18</time> &#8226; <span class="post-list__meta--tags tags">于&nbsp;</span><a class="btn-border-small" href="/2017/06/18/BlogSetup/">继续阅读</a></div>
-      <hr class="post-list__divider" />
-    </li>
+        </div>
+        
+          
   
-    
-  </ol>
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
 
 
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
 </div>
 
 
-            <footer class="footer">
-    <span class="footer__copyright">
-        本站点采用 <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a>
-    </span>
-    <span class="footer__copyright">
-        基于 <a href="http://hexo.io">Hexo</a> 搭建，感谢 <a href="https://pages.github.com/">GitHub Pages</a> 提供免费的托管服务
-    </span>
-    <span class="footer__copyright">
-        &copy; 2017 - 本站使用 <a href="https://github.com/monniya/hexo-theme-new-vno ">new-vno</a> 主题,
-        由<a href="https://monniya.com ">@Monniya</a> 修改自 <a href="https://github.com/lenbo-ma/hexo-theme-vno" target="_blank">Vno</a>, 原创出自<a href="http://github.com/onevcat/vno" target="_blank">onevcat</a>
-    </span>
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
     
-</footer>
-
-
-        </div>
-    </div>
-
-     
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
     
-    <script>
-        var _hmt = _hmt || [];
-        (function() {
-            var hm = document.createElement("script");
-            hm.src = "//hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
-            var s = document.getElementsByTagName("script")[0]; 
-            s.parentNode.insertBefore(hm, s);
-        })();
-    </script>
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
 
 
 
-    <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
-    
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+    <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+  
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
 </body>
 </html>
