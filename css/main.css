@@ -1675,7 +1675,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6b5c3b;
+  background: #868f5b;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2767,25 +2767,25 @@ hr {
   }
 }
 .header {
-  background: #d1eeee;
+  background: #e6e6fa;
 }
-首页阅读全文样式,
 .post-button {
   margin-top: 30px;
   text-align: center;
 }
 .post-button .btn {
-  color: #fff;
+  color: #555;
   font-size: 15px;
-  background: #686868;
-  border-radius: 16px;
+  background: #fff;
   line-height: 2;
-  margin: 0 4px 8px 4px;
   padding: 0 20px;
+  margin: 0 0 0 0 !important;
+  border-bottom: 0;
+  border-radius: 2px;
+  border: 2px solid #555;
 }
-.post-button a {
-  border-bottom: 1px solid #666;
-}
-.post-button a:hover {
-  color: #7784ba;
+.post-button .btn:hover {
+  border-color: #222;
+  color: #fff;
+  background: #222;
 }
