@@ -1,0 +1,1195 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言对于app的开发来说，app要换个环境或者做了某个新功能，都要给测试人员打一个包。人少还好说，一旦人多设备也多了，打包所花的时间也随之增加了。所以需要持续集成(Mac OS)来解决这种问题，本次的自动打包是基于Jenkins的Xcode插件实现的。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins+Xcode">
+<meta property="og:url" content="http://yoursite.com/2017/07/09/Jenkins/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="1.前言对于app的开发来说，app要换个环境或者做了某个新功能，都要给测试人员打一个包。人少还好说，一旦人多设备也多了，打包所花的时间也随之增加了。所以需要持续集成(Mac OS)来解决这种问题，本次的自动打包是基于Jenkins的Xcode插件实现的。">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/jenkins.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/initPass.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/initPlugin.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/firstUser.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/installPlugin.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/initProject.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Genneral.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/sourceCode.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/addSvnUser.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/trigger.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/KeychainsPluins.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Keychains.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Provisioning%20Profiles.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/XcodeBuilder.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/setkeychain.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/setmobileprovision.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Generalbuildsettings.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Packapplication.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/Codesigning.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/AdvancedXcode.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-2.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-3.png">
+<meta property="og:updated_time" content="2017-07-09T14:17:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins+Xcode">
+<meta name="twitter:description" content="1.前言对于app的开发来说，app要换个环境或者做了某个新功能，都要给测试人员打一个包。人少还好说，一旦人多设备也多了，打包所花的时间也随之增加了。所以需要持续集成(Mac OS)来解决这种问题，本次的自动打包是基于Jenkins的Xcode插件实现的。">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/09/Jenkins/jenkins.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/09/Jenkins/"/>
+
+
+
+
+
+  <title>Jenkins+Xcode | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/09/Jenkins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Jenkins+Xcode</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-09T15:30:00+08:00">
+                2017-07-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">Jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/09/Jenkins/" class="leancloud_visitors" data-flag-title="Jenkins+Xcode">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/2017/07/09/Jenkins/jenkins.png"></p>
+<h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>对于app的开发来说，app要换个环境或者做了某个新功能，都要给测试人员打一个包。人少还好说，一旦人多设备也多了，打包所花的时间也随之增加了。所以需要持续集成(Mac OS)来解决这种问题，本次的自动打包是基于Jenkins的Xcode插件实现的。</p>
+<a id="more"></a>
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h3><p>到<a href="https://jenkins.io/" target="_blank" rel="external">官网</a>下载，按照步骤安装即可。</p>
+<h3 id="3-初始化"><a href="#3-初始化" class="headerlink" title="3.初始化"></a>3.初始化</h3><h4 id="3-1初始化密码"><a href="#3-1初始化密码" class="headerlink" title="3.1初始化密码"></a>3.1初始化密码</h4><p>安装完成后，浏览器会自动打开<a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a>，如果没有，可以手动打开。还是打不开就需要安装<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">JDK</a>环境。</p>
+<p>打开后会发现需要初始密码，根据提示的路径<code>/Users/Shared/Jenkins/Home/secrets/initialAdminPassword</code>找到initialAdminPassword文件打开复制密码。</p>
+<blockquote>
+<p>注意：secrets文件是有权限的，需要自己修改文件的读写权限，才能进去。</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/initPass.png"><br><img src="/2017/07/09/Jenkins/initPlugin.png"></p>
+<h4 id="3-2设置账号密码"><a href="#3-2设置账号密码" class="headerlink" title="3.2设置账号密码"></a>3.2设置账号密码</h4><p>安装完推荐的插件后，需要设置Jenkins的登录账号跟密码。信息一定要填全并且正确。</p>
+<p><img src="/2017/07/09/Jenkins/firstUser.png"></p>
+<h4 id="3-4安装插件"><a href="#3-4安装插件" class="headerlink" title="3.4安装插件"></a>3.4安装插件</h4><p>我们可以到<strong>系统管理-&gt;管理插件-&gt;可选插件</strong>找到自己需要的插件进行安装，比如我用到的Xcode integration插件，选择下面的直接安装。</p>
+<p><img src="/2017/07/09/Jenkins/installPlugin.png"></p>
+<h4 id="3-5创建项目"><a href="#3-5创建项目" class="headerlink" title="3.5创建项目"></a>3.5创建项目</h4><p>准备步骤弄好了，就可以创建一个项目了。</p>
+<p><img src="/2017/07/09/Jenkins/initProject.png"></p>
+<h3 id="4-项目配置"><a href="#4-项目配置" class="headerlink" title="4.项目配置"></a>4.项目配置</h3><h4 id="4-1Genneral"><a href="#4-1Genneral" class="headerlink" title="4.1Genneral"></a>4.1Genneral</h4><p><img src="/2017/07/09/Jenkins/Genneral.png"></p>
+<ul>
+<li>项目名称<ul>
+<li>设置项目名称</li>
+</ul>
+</li>
+<li>描述<ul>
+<li>对应的描述提示</li>
+</ul>
+</li>
+<li>丢弃旧的构建<ul>
+<li>对所有构建的处理，里面有保持构建的天数以及保持构建的最大个数</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-2源码管理"><a href="#4-2源码管理" class="headerlink" title="4.2源码管理"></a>4.2源码管理</h4><p>我使用的是SVN(Git是第二个选项)，所以需要配置SVN后，Jenkins才能拿到服务器的代码。SVN用到的插件是Subversion Plug-in。</p>
+<p><img src="/2017/07/09/Jenkins/sourceCode.png"></p>
+<ul>
+<li>Repository URL<ul>
+<li>服务器对应项目的地址</li>
+</ul>
+</li>
+<li>Credentials<ul>
+<li>服务器对应项目的账号密码，如果没有则需要点击右边的Add进行添加。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2017/07/09/Jenkins/addSvnUser.png"></p>
+<h4 id="4-3构建触发器"><a href="#4-3构建触发器" class="headerlink" title="4.3构建触发器"></a>4.3构建触发器</h4><p><img src="/2017/07/09/Jenkins/trigger.png"></p>
+<ul>
+<li>Build periodically<ul>
+<li>每天定时构建的的时间设置</li>
+</ul>
+</li>
+<li>Poll SCM<ul>
+<li>每天轮询代码时间间隔</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-4构建环境"><a href="#4-4构建环境" class="headerlink" title="4.4构建环境"></a>4.4构建环境</h4><h5 id="4-4-1安装插件"><a href="#4-4-1安装插件" class="headerlink" title="4.4.1安装插件"></a>4.4.1安装插件</h5><p>iOS的打包都需要证书和描述文件的，然后Jenkins里的<strong>Keychains and Provisioning Profiles Management</strong>插件就能配置证书跟描述文件。</p>
+<p><img src="/2017/07/09/Jenkins/KeychainsPluins.png"></p>
+<h5 id="4-4-2配置插件"><a href="#4-4-2配置插件" class="headerlink" title="4.4.2配置插件"></a>4.4.2配置插件</h5><p>安装后我们到系统管理的下面找到它，并查看需要配置的选项，一般操作是点击<code>选择文件</code>并<code>Upload</code>就可以了。</p>
+<blockquote>
+<p>Keychains</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/Keychains.png"></p>
+<p>先说这里需要使用的文件在<code>/Users/用户名/Library/keychains</code>中的<strong>login.keychain</strong>与<strong>login.keychain-db</strong>其中一个，因为在旧的系统当中只有.keychain文件，而在新的系统变成.keychain-db文件。然后.keychain直接复制一份到桌面然后选择上传即可，而.keychain-db需要先去除后面的-db，就可以用了。</p>
+<ul>
+<li>Password<ul>
+<li>电脑的开机密码</li>
+</ul>
+</li>
+<li>Identities<ul>
+<li>这个是签名的id，手动添加，可到系统钥匙串查看。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Provisioning Profiles</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/Provisioning Profiles.png"></p>
+<p>上传对应的描述文件即可，比如开发的描述文件、发布的描述文件等。然后我们需要到到系统的描述文件目录(<code>~/Library/MobileDevice/Provisioning Profiles</code>)把文件拷出来放到桌面。</p>
+<ul>
+<li>Provisioning Profiles Directory Path<ul>
+<li>这个是Jenkins保存描述文件安装后对应描述文件的目录(并不是描述文件本身)</li>
+</ul>
+</li>
+<li>Filename<ul>
+<li>自动识别</li>
+</ul>
+</li>
+<li>UUID<ul>
+<li>自动识别</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>最后</p>
+</blockquote>
+<p>刚才已经叫提示大家把.keychain与.mobileprovision文件拷到桌面了，这时需要把这两种文件放到Jenkins对应的目录下。这样做的原因是因为Jenkins有时并不能复制到自己的目录下，这是为了确保Jenkins拿到的都是最新的证书与描述文件。</p>
+<ul>
+<li>keychain<ul>
+<li>/Users/Shared/Jenkins/Library/Keychains</li>
+</ul>
+</li>
+<li>mobileprovision<ul>
+<li>/Users/Shared/Jenkins/Library/MobileDevice/Provisioning Profiles</li>
+</ul>
+</li>
+<li>如果后面的文件夹没有可以自己创建</li>
+</ul>
+<h5 id="4-4-3XcodeBuilder配置"><a href="#4-4-3XcodeBuilder配置" class="headerlink" title="4.4.3XcodeBuilder配置"></a>4.4.3XcodeBuilder配置</h5><p>我们需要到系统管理-&gt;系统设置-&gt;找到Xcode Builder，同样需要设定keychain的配置信息，这就成了全局的keychain使用。</p>
+<p><img src="/2017/07/09/Jenkins/XcodeBuilder.png"></p>
+<h5 id="4-4-4使用插件"><a href="#4-4-4使用插件" class="headerlink" title="4.4.4使用插件"></a>4.4.4使用插件</h5><p>回到项目配置中的构建环境板块中勾选<strong>Keychains and Code Signing Identities</strong>与<strong>Mobile Provisioning Profiles</strong>，选用的是我们刚才创建的证书与描述文件。</p>
+<p><img src="/2017/07/09/Jenkins/setkeychain.png"><br><img src="/2017/07/09/Jenkins/setmobileprovision.png"></p>
+<h4 id="4-5构建"><a href="#4-5构建" class="headerlink" title="4.5构建"></a>4.5构建</h4><p>在构建中添加找到Xcode，接下配置对应信息即可。</p>
+<blockquote>
+<p>General build settings(打包的基本设置)</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/Generalbuildsettings.png"><br><img src="/2017/07/09/Jenkins/Packapplication.png"></p>
+<ul>
+<li>Target<ul>
+<li>target的名字</li>
+</ul>
+</li>
+<li>Clean before build?<ul>
+<li>每次build之前先执行clean的操作</li>
+</ul>
+</li>
+<li>Pack application, build and sign .ipa?<ul>
+<li>每次build后是否需要打包ipa文件</li>
+</ul>
+</li>
+<li>Export method<ul>
+<li>导出的形式是以开发、发布、企业等形式，下面有具体描述</li>
+</ul>
+</li>
+<li>.ipa filename pattern<ul>
+<li>ipa的命名</li>
+</ul>
+</li>
+<li>Output directory<ul>
+<li>ipa的导出文件</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Code signing &amp; OS X keychain options(签名的基本信息配置)</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/Codesigning.png"></p>
+<ul>
+<li>Development Team<ul>
+<li>可以使用空的，然后指定一个Team ID。</li>
+<li>可以使用全局的，可到系统设置里面配置。</li>
+</ul>
+</li>
+<li>Unlock Keychain?<ul>
+<li>可以使用空的，然后指定Jenkins的Keychain path和开机密码。</li>
+<li>可以使用全局的，可到系统设置里面配置。（4.4.3里有说明）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Advanced Xcode build options(Xcode打包的高级配置)</p>
+</blockquote>
+<p><img src="/2017/07/09/Jenkins/AdvancedXcode.png"></p>
+<ul>
+<li>Clean test reports?<ul>
+<li>清除之前的test日志。</li>
+</ul>
+</li>
+<li>Xcode Schema File<ul>
+<li>需要构建的环境（一般是target名称）</li>
+</ul>
+</li>
+<li>Xcode Workspace File<ul>
+<li>Cooapods项目结构的.xcworkspace文件名</li>
+</ul>
+</li>
+<li>Xcode Project Directory<ul>
+<li>非Cooapods项目结构的.xcodeproj目录</li>
+</ul>
+</li>
+<li>Xcode Project File<ul>
+<li>非Cooapods项目结构的.xcodeproj文件名</li>
+</ul>
+</li>
+<li>Build output directory<ul>
+<li>build后的所有文件存放目录</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-6构建后操作"><a href="#4-6构建后操作" class="headerlink" title="4.6构建后操作"></a>4.6构建后操作</h4><p>这里可以做很多功能，比如发邮件通知、将文件放到FTP、代码分析等，暂不展开来说。</p>
+<h3 id="5-尝试构建"><a href="#5-尝试构建" class="headerlink" title="5.尝试构建"></a>5.尝试构建</h3><p>最后保存好整个项目的配置，回到项目的界面，我们来试一下构建，并查看每次构建的日志，确定最终执行的结果。</p>
+<div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-1.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-2.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-3.png"></div></div><div class="group-picture-row"></div></div></div>
+<h3 id="6-最后结果"><a href="#6-最后结果" class="headerlink" title="6.最后结果"></a>6.最后结果</h3><p>每次构建成功都是显示蓝色的，并且查看日志内容会找到以下内容，希望你也能看到以下内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">** ARCHIVE SUCCEEDED **</div><div class="line">····························</div><div class="line">** EXPORT SUCCEEDED **</div><div class="line">····························</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
+<h3 id="7-遇到问题"><a href="#7-遇到问题" class="headerlink" title="7.遇到问题"></a>7.遇到问题</h3><ul>
+<li>问题-1<ul>
+<li>系统目录在只有login.keychain-db文件</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>将后缀的db去掉后上传。</li>
+</ul>
+</li>
+<li>问题-2<ul>
+<li>The user name or passphrase you entered is not correct.</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>找到所有设置keychain的地方，再确定每个密码都是对的。</li>
+</ul>
+</li>
+<li>问题-3<ul>
+<li>file /Users/yidongshiyebu/Library/Keychains-db does not exist</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>Jenkins目录下没找到login.keychain-db文件，将系统的复制进去即可。</li>
+</ul>
+</li>
+<li>问题-4<ul>
+<li>No global development team or local team ID was configured</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>设置对的teamID</li>
+</ul>
+</li>
+<li>问题-5<ul>
+<li>‘aaa.xcworkspace’ does not exist.</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>设置错了工程文件</li>
+</ul>
+</li>
+<li>问题-6<ul>
+<li>the workspace named “aaa” does not contain a scheme named “aaa”. The “-list” option can be used to find the names of the schemes in the workspace.</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>在Xcode中的Manage Schemes打开，把需要构建的项目把右边的Share点上</li>
+</ul>
+</li>
+<li>问题-7<ul>
+<li>No profiles for ‘com.aaa.aaa’ were found:  Xcode couldn’t find a provisioning profile matching ‘com.aaa.aaa’.Code signing is required for product type ‘Application’ in SDK ‘iOS 10.3’</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>在项目工程中设置不自动配置证书跟描述文件</li>
+</ul>
+</li>
+<li>问题-8<ul>
+<li>No iOS profile matching ‘aaa/aaaa’ found:  Xcode couldn’t find a profile matching ‘aaa/aaaa’. Install the profile (by dragging and dropping it onto Xcode’s dock item) or select a different one in the General tab of the target editor.</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>使用了错误的TeamID，更换即可。</li>
+</ul>
+</li>
+<li>问题-9<ul>
+<li>unknown error -1=ffffffffffffffff</li>
+</ul>
+</li>
+<li>解决<ul>
+<li>重新配置一次所有的keychain，以及keyChain的密码，确保是最新和正确的。</li>
+</ul>
+</li>
+</ul>
+<h3 id="8-预告"><a href="#8-预告" class="headerlink" title="8.预告"></a>8.预告</h3><p>下次就聊聊如何用命令行的方式来执行整个打包过程。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/24/CusNext/" rel="next" title="自定义Next主题">
+                <i class="fa fa-chevron-left"></i> 自定义Next主题
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'Jenkins+Xcode',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装"><span class="nav-text">2.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-初始化"><span class="nav-text">3.初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1初始化密码"><span class="nav-text">3.1初始化密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2设置账号密码"><span class="nav-text">3.2设置账号密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4安装插件"><span class="nav-text">3.4安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5创建项目"><span class="nav-text">3.5创建项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-项目配置"><span class="nav-text">4.项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1Genneral"><span class="nav-text">4.1Genneral</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2源码管理"><span class="nav-text">4.2源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3构建触发器"><span class="nav-text">4.3构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4构建环境"><span class="nav-text">4.4构建环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1安装插件"><span class="nav-text">4.4.1安装插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2配置插件"><span class="nav-text">4.4.2配置插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-3XcodeBuilder配置"><span class="nav-text">4.4.3XcodeBuilder配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-4使用插件"><span class="nav-text">4.4.4使用插件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5构建"><span class="nav-text">4.5构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6构建后操作"><span class="nav-text">4.6构建后操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-尝试构建"><span class="nav-text">5.尝试构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-最后结果"><span class="nav-text">6.最后结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-遇到问题"><span class="nav-text">7.遇到问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-预告"><span class="nav-text">8.预告</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
