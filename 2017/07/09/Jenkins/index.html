@@ -122,7 +122,7 @@
 <meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-1.png">
 <meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-2.png">
 <meta property="og:image" content="http://yoursite.com/2017/07/09/Jenkins/finish-3.png">
-<meta property="og:updated_time" content="2017-07-09T14:17:34.000Z">
+<meta property="og:updated_time" content="2017-07-15T14:25:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins+Xcode">
 <meta name="twitter:description" content="1.前言对于app的开发来说，app要换个环境或者做了某个新功能，都要给测试人员打一个包。人少还好说，一旦人多设备也多了，打包所花的时间也随之增加了。所以需要持续集成(Mac OS)来解决这种问题，本次的自动打包是基于Jenkins的Xcode插件实现的。">
@@ -597,7 +597,7 @@
 <h4 id="4-6构建后操作"><a href="#4-6构建后操作" class="headerlink" title="4.6构建后操作"></a>4.6构建后操作</h4><p>这里可以做很多功能，比如发邮件通知、将文件放到FTP、代码分析等，暂不展开来说。</p>
 <h3 id="5-尝试构建"><a href="#5-尝试构建" class="headerlink" title="5.尝试构建"></a>5.尝试构建</h3><p>最后保存好整个项目的配置，回到项目的界面，我们来试一下构建，并查看每次构建的日志，确定最终执行的结果。</p>
 <div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-1.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-2.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/07/09/Jenkins/finish-3.png"></div></div><div class="group-picture-row"></div></div></div>
-<h3 id="6-最后结果"><a href="#6-最后结果" class="headerlink" title="6.最后结果"></a>6.最后结果</h3><p>每次构建成功都是显示蓝色的，并且查看日志内容会找到以下内容，希望你也能看到以下内容。</p>
+<h3 id="6-执行结果"><a href="#6-执行结果" class="headerlink" title="6.执行结果"></a>6.执行结果</h3><p>每次构建成功都是显示蓝色的，并且查看日志内容会找到以下内容，希望你也能看到以下内容。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">** ARCHIVE SUCCEEDED **</div><div class="line">····························</div><div class="line">** EXPORT SUCCEEDED **</div><div class="line">····························</div><div class="line">Finished: SUCCESS</div></pre></td></tr></table></figure>
 <h3 id="7-遇到问题"><a href="#7-遇到问题" class="headerlink" title="7.遇到问题"></a>7.遇到问题</h3><ul>
 <li>问题-1<ul>
@@ -720,6 +720,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/07/11/JenkinsComBuild/" rel="prev" title="Jenkins+xcodebuild+xcrun">
+                Jenkins+xcodebuild+xcrun <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -805,7 +809,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-count">4</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -882,7 +886,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装"><span class="nav-text">2.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-初始化"><span class="nav-text">3.初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1初始化密码"><span class="nav-text">3.1初始化密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2设置账号密码"><span class="nav-text">3.2设置账号密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4安装插件"><span class="nav-text">3.4安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5创建项目"><span class="nav-text">3.5创建项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-项目配置"><span class="nav-text">4.项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1Genneral"><span class="nav-text">4.1Genneral</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2源码管理"><span class="nav-text">4.2源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3构建触发器"><span class="nav-text">4.3构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4构建环境"><span class="nav-text">4.4构建环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1安装插件"><span class="nav-text">4.4.1安装插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2配置插件"><span class="nav-text">4.4.2配置插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-3XcodeBuilder配置"><span class="nav-text">4.4.3XcodeBuilder配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-4使用插件"><span class="nav-text">4.4.4使用插件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5构建"><span class="nav-text">4.5构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6构建后操作"><span class="nav-text">4.6构建后操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-尝试构建"><span class="nav-text">5.尝试构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-最后结果"><span class="nav-text">6.最后结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-遇到问题"><span class="nav-text">7.遇到问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-预告"><span class="nav-text">8.预告</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装"><span class="nav-text">2.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-初始化"><span class="nav-text">3.初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1初始化密码"><span class="nav-text">3.1初始化密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2设置账号密码"><span class="nav-text">3.2设置账号密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4安装插件"><span class="nav-text">3.4安装插件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-5创建项目"><span class="nav-text">3.5创建项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-项目配置"><span class="nav-text">4.项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1Genneral"><span class="nav-text">4.1Genneral</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2源码管理"><span class="nav-text">4.2源码管理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3构建触发器"><span class="nav-text">4.3构建触发器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4构建环境"><span class="nav-text">4.4构建环境</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-1安装插件"><span class="nav-text">4.4.1安装插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-2配置插件"><span class="nav-text">4.4.2配置插件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-3XcodeBuilder配置"><span class="nav-text">4.4.3XcodeBuilder配置</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-4-4使用插件"><span class="nav-text">4.4.4使用插件</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5构建"><span class="nav-text">4.5构建</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6构建后操作"><span class="nav-text">4.6构建后操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-尝试构建"><span class="nav-text">5.尝试构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-执行结果"><span class="nav-text">6.执行结果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-遇到问题"><span class="nav-text">7.遇到问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-预告"><span class="nav-text">8.预告</span></a></li></ol></div>
             
 
           </div>

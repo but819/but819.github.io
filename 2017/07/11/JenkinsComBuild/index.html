@@ -1,0 +1,1004 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言上篇文章已经聊过如何用插件实现Xcode自动化打包，这次我们来聊聊如何用脚本来打包。首先为什么有好好的插件不用，要自己写脚本来实现尼。好简单的，测试说帮我打个某个环境的正式或者发布包，这时你应该懵逼了吧，其实最主要是因为用脚本能实现其他自定义的操作。这次是通过Jenkins选择环境并且选择包类型(测试、正式)，然后用脚本打出对应的包。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jenkins+xcodebuild+xcrun">
+<meta property="og:url" content="http://yoursite.com/2017/07/11/JenkinsComBuild/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="1.前言上篇文章已经聊过如何用插件实现Xcode自动化打包，这次我们来聊聊如何用脚本来打包。首先为什么有好好的插件不用，要自己写脚本来实现尼。好简单的，测试说帮我打个某个环境的正式或者发布包，这时你应该懵逼了吧，其实最主要是因为用脚本能实现其他自定义的操作。这次是通过Jenkins选择环境并且选择包类型(测试、正式)，然后用脚本打出对应的包。">
+<meta property="og:image" content="http://yoursite.com/2017/07/11/JenkinsComBuild/setChoice.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/11/JenkinsComBuild/addExecuteshell.png">
+<meta property="og:updated_time" content="2017-07-15T14:29:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jenkins+xcodebuild+xcrun">
+<meta name="twitter:description" content="1.前言上篇文章已经聊过如何用插件实现Xcode自动化打包，这次我们来聊聊如何用脚本来打包。首先为什么有好好的插件不用，要自己写脚本来实现尼。好简单的，测试说帮我打个某个环境的正式或者发布包，这时你应该懵逼了吧，其实最主要是因为用脚本能实现其他自定义的操作。这次是通过Jenkins选择环境并且选择包类型(测试、正式)，然后用脚本打出对应的包。">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/11/JenkinsComBuild/setChoice.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/11/JenkinsComBuild/"/>
+
+
+
+
+
+  <title>Jenkins+xcodebuild+xcrun | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/11/JenkinsComBuild/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Jenkins+xcodebuild+xcrun</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-11T22:21:00+08:00">
+                2017-07-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">Jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/11/JenkinsComBuild/" class="leancloud_visitors" data-flag-title="Jenkins+xcodebuild+xcrun">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>上篇文章已经聊过如何用插件实现Xcode自动化打包，这次我们来聊聊如何用脚本来打包。首先为什么有好好的插件不用，要自己写脚本来实现尼。好简单的，测试说帮我打个某个环境的正式或者发布包，这时你应该懵逼了吧，其实最主要是因为用脚本能实现其他自定义的操作。<strong>这次是通过Jenkins选择环境并且选择包类型(测试、正式)，然后用脚本打出对应的包。</strong></p>
+<a id="more"></a>
+<h3 id="2-添加选择参数"><a href="#2-添加选择参数" class="headerlink" title="2.添加选择参数"></a>2.添加选择参数</h3><p>回到我们的项目配置中的General，里面有参数化构建过程的选项，我们添加一个Choice Parameter参数。这里我假设有两个环境并且对应两个打包类型就有四个选择了。</p>
+<p><img src="/2017/07/11/JenkinsComBuild/setChoice.png"></p>
+<ul>
+<li>Name<ul>
+<li>参数名称，同时在项目里新建了一个叫<code>PROJECT_ENVIROMENT</code>变量</li>
+</ul>
+</li>
+<li>Choices<ul>
+<li>可选择项</li>
+</ul>
+</li>
+<li>Description<ul>
+<li>可选项的描述</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-更改构建"><a href="#3-更改构建" class="headerlink" title="3.更改构建"></a>3.更改构建</h3><p>基于上一篇文章的项目配置下，我们将原来构建的Xcode删掉，新建一个<code>Execute shell</code></p>
+<p><img src="/2017/07/11/JenkinsComBuild/addExecuteshell.png"></p>
+<ul>
+<li>Command<ul>
+<li>你将要执行的命令</li>
+<li>命令意思：将要执行工程目录下一个叫package的脚本文件</li>
+<li>这个脚本包含了我们打包的命令</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-xcodebuild"><a href="#4-xcodebuild" class="headerlink" title="4.xcodebuild"></a>4.xcodebuild</h3><h4 id="4-1官方文档"><a href="#4-1官方文档" class="headerlink" title="4.1官方文档"></a>4.1官方文档</h4><p>xcodebuild是Xcode的自带命令，提供了我们常见的bulid、clean等一些操作，我们可以在终端中输入<code>xcodebuild -help</code>查看具体命令，再结合<a href="https://developer.apple.com/legacy/library/documentation/Darwin/Reference/ManPages/man1/xcodebuild.1.html" target="_blank" rel="external">官方文档</a>(官方文档的是旧版命令)。</p>
+<p>第一命令是给.xcodeproj的工程使用的，而第二个命令是给.xcworkspace的工程使用的。然后这次我们用到的是第二跟第六个命令，我贴了一些关键的内容帮助我们理解。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">#xcodebuild -help</div><div class="line"></div><div class="line">xcodebuild [-project &lt;projectname&gt;] </div><div class="line">           -scheme &lt;schemeName&gt;   </div><div class="line">           [-destination &lt;destinationspecifier&gt;]... </div><div class="line">           [-configuration &lt;configurationname&gt;] </div><div class="line">           [-arch &lt;architecture&gt;]...             </div><div class="line">           [-sdk [&lt;sdkname&gt;|&lt;sdkpath&gt;]] </div><div class="line">           [-showBuildSettings] </div><div class="line">           [&lt;buildsetting&gt;=&lt;value&gt;]... </div><div class="line">           [&lt;buildaction&gt;]...</div><div class="line"></div><div class="line">xcodebuild -workspace &lt;workspacename&gt; </div><div class="line">           -scheme &lt;schemeName&gt; </div><div class="line">           [-destination &lt;destinationspecifier&gt;]... </div><div class="line">           [-configuration &lt;configurationname&gt;] </div><div class="line">           [-arch &lt;architecture&gt;]... </div><div class="line">           [-sdk [&lt;sdkname&gt;|&lt;sdkpath&gt;]] </div><div class="line">           [-showBuildSettings] </div><div class="line">           [&lt;buildsetting&gt;=&lt;value&gt;]... </div><div class="line">           [&lt;buildaction&gt;]...</div><div class="line">       </div><div class="line">xcodebuild -version </div><div class="line">           [-sdk [&lt;sdkfullpath&gt;|&lt;sdkname&gt;] [&lt;infoitem&gt;] ]</div><div class="line"></div><div class="line">xcodebuild -list </div><div class="line">           [[-project &lt;projectname&gt;]|[-workspace &lt;workspacename&gt;]] </div><div class="line">           [-json]</div><div class="line"></div><div class="line">xcodebuild -showsdks</div><div class="line">       </div><div class="line">xcodebuild -exportArchive </div><div class="line">           -archivePath &lt;xcarchivepath&gt; </div><div class="line">           -exportPath &lt;destinationpath&gt; </div><div class="line">           -exportOptionsPlist &lt;plistpath&gt;</div><div class="line"></div><div class="line">xcodebuild -exportLocalizations </div><div class="line">           -localizationPath &lt;path&gt; </div><div class="line">           -project &lt;projectname&gt; </div><div class="line">           [-exportLanguage &lt;targetlanguage&gt;...]</div><div class="line"></div><div class="line">xcodebuild -importLocalizations </div><div class="line">           -localizationPath &lt;path&gt; </div><div class="line">           -project &lt;projectname&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">-buildaction ...</div><div class="line">     Specify a build action (or actions) to perform on the target. Available build actions are:</div><div class="line"></div><div class="line">     build       Build the target in the build root (SYMROOT).  This is the default build action.</div><div class="line"></div><div class="line">     analyze     Build and analyze a target or scheme from the build root (SYMROOT).  This requires</div><div class="line">                       specifying a scheme.</div><div class="line"></div><div class="line">     archive     Archive a scheme from the build root (SYMROOT).  This requires specifying a scheme.</div><div class="line"></div><div class="line">     test        Test a scheme from the build root (SYMROOT).  This requires specifying a scheme and</div><div class="line">                       optionally a destination.</div><div class="line"></div><div class="line">     installsrc  Copy the source of the project to the source root (SRCROOT).</div><div class="line"></div><div class="line">     install     Build the target and install it into the target&apos;s installation directory in the dis-tribution distribution</div><div class="line">                       tribution root (DSTROOT).</div><div class="line"></div><div class="line">     clean       Remove build products and intermediate files from the build root (SYMROOT).</div></pre></td></tr></table></figure>
+<h4 id="4-2xcodebuild"><a href="#4-2xcodebuild" class="headerlink" title="4.2xcodebuild"></a>4.2xcodebuild</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#第二条命令</div><div class="line">xcodebuild -workspace &lt;workspacename&gt; </div><div class="line">           -scheme &lt;schemeName&gt; </div><div class="line">           [-destination &lt;destinationspecifier&gt;]... </div><div class="line">           [-configuration &lt;configurationname&gt;] </div><div class="line">           [-arch &lt;architecture&gt;]... </div><div class="line">           [-sdk [&lt;sdkname&gt;|&lt;sdkpath&gt;]] </div><div class="line">           [-showBuildSettings] </div><div class="line">           [&lt;buildsetting&gt;=&lt;value&gt;]... </div><div class="line">           [&lt;buildaction&gt;]...</div></pre></td></tr></table></figure>
+<ul>
+<li>workspace<ul>
+<li>工程名称</li>
+</ul>
+</li>
+<li>scheme<ul>
+<li>主题名称</li>
+</ul>
+</li>
+<li>destination<ul>
+<li>指定安装设备</li>
+<li>destination ‘platform=iOS Simulator,name=iPhone’ -destination ‘platform=iOS,name=My iPad’</li>
+</ul>
+</li>
+<li>configuration<ul>
+<li>环境配置，默认只有两个选择(DEBUG或REALEASE)，也可以使用其他自己的自定义的。</li>
+</ul>
+</li>
+<li>arch<ul>
+<li>指定构建的架构</li>
+</ul>
+</li>
+<li>sdk<ul>
+<li>指定构建时的sdK，可以为指定sdk名字或者sdk路径</li>
+</ul>
+</li>
+<li>showBuildSettings<ul>
+<li>显示构建设置的列表</li>
+</ul>
+</li>
+<li>buildsetting<ul>
+<li>以键值对的形式覆盖项目的Xcode配置 </li>
+</ul>
+</li>
+<li>buildaction<ul>
+<li>这就是我们要执行的操作(上面的buildaction)</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#第六条命令</div><div class="line">xcodebuild -exportArchive </div><div class="line">           -archivePath &lt;xcarchivepath&gt; </div><div class="line">           -exportPath &lt;destinationpath&gt; </div><div class="line">           -exportOptionsPlist &lt;plistpath&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>archivePath<ul>
+<li>.xcarchive文件的路径</li>
+</ul>
+</li>
+<li>exportPath<ul>
+<li>导出后文件存放的路径</li>
+</ul>
+</li>
+<li>exportOptionsPlist<ul>
+<li>新版打包信息需要存放在一个plist文件中(自己新建)，plist内容在命令行中有说明。</li>
+</ul>
+</li>
+</ul>
+<h4 id="4-3执行clean操作"><a href="#4-3执行clean操作" class="headerlink" title="4.3执行clean操作"></a>4.3执行clean操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#假设工程ABC</div><div class="line">xcodebuild -workspace &quot;ABC.xcworkspace&quot; -scheme &quot;ABC&quot; -configuration &quot;DEBUG&quot; clean</div></pre></td></tr></table></figure>
+<h4 id="4-4执行archive操作"><a href="#4-4执行archive操作" class="headerlink" title="4.4执行archive操作"></a>4.4执行archive操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#假设工程ABC</div><div class="line">xcodebuild -workspace &quot;ABC.xcworkspace&quot; -scheme &quot;ABC&quot; -sdk iphoneos -configuration &quot;DEBUG&quot; archive -archivePath &quot;./ABC.xcarchive&quot;</div></pre></td></tr></table></figure>
+<h4 id="4-5生成ipa操作"><a href="#4-5生成ipa操作" class="headerlink" title="4.5生成ipa操作"></a>4.5生成ipa操作</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#假设工程ABC</div><div class="line">xcodebuild -exportArchive -archivePath &quot;./ABC.xcarchive&quot; -exportPath &quot;./&quot; -exportOptionsPlist &quot;./exportOptions.plist&quot;</div></pre></td></tr></table></figure>
+<h4 id="4-6执行结果"><a href="#4-6执行结果" class="headerlink" title="4.6执行结果"></a>4.6执行结果</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">** ARCHIVE SUCCEEDED **</div><div class="line">····························</div><div class="line">** EXPORT SUCCEEDED **</div></pre></td></tr></table></figure>
+<h3 id="5-App配合"><a href="#5-App配合" class="headerlink" title="5.App配合"></a>5.App配合</h3><p>上面的部分主要讲解如何在Jenkins上使用脚本对Xcode项目进行自动化打包功能，还记得我们上面所说的<code>添加选择参数</code>内容，既然可以选择切换环境，当然App也要知道了这个内容才能更改环境。</p>
+<h4 id="5-1思路"><a href="#5-1思路" class="headerlink" title="5.1思路"></a>5.1思路</h4><p>首先工程项目下有个config.txt文件，然后在Jenkins选了对应环境值，再到构建环节时将环境值存放在config.txt当中。然后当App启动后需要读取config.txt文件确定当前的环境，这样就把整个功能串通了。这部分的功能就不细说，因为实现方式有很多种，最后我补上我方案上的一些关键语句。</p>
+<h4 id="5-2脚本"><a href="#5-2脚本" class="headerlink" title="5.2脚本"></a>5.2脚本</h4><p>将Jenkins变量存储功能应该放在打包的语句前执行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//将Jenkins中的变量PROJECT_ENVIROMENT</div><div class="line">//以键为nowEnv值为PROJECT_ENVIROMENT的形式写入到</div><div class="line">//当前目录下的config.txt当中</div><div class="line">echo &quot;nowEnv=$&#123;PROJECT_ENVIROMENT&#125;&quot; &gt;&gt; &quot;./config.txt&quot;</div></pre></td></tr></table></figure>
+<h4 id="5-3App"><a href="#5-3App" class="headerlink" title="5.3App"></a>5.3App</h4><p>App需要读取config.txt确定当前环境</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSString *filePath = [[NSBundle mainBundle] pathForResource:@&quot;config&quot; ofType:@&quot;txt&quot;]; </div><div class="line">NSString *dataFile = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];</div><div class="line">NSArray  *dataArr  = [dataFile componentsSeparatedByString:@&quot;\n&quot;];</div></pre></td></tr></table></figure>
+<h3 id="6-预告"><a href="#6-预告" class="headerlink" title="6.预告"></a>6.预告</h3><p>下次就聊聊Jenkins里的一些插件的使用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/09/Jenkins/" rel="next" title="Jenkins+Xcode">
+                <i class="fa fa-chevron-left"></i> Jenkins+Xcode
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'Jenkins+xcodebuild+xcrun',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-添加选择参数"><span class="nav-text">2.添加选择参数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-更改构建"><span class="nav-text">3.更改构建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-xcodebuild"><span class="nav-text">4.xcodebuild</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1官方文档"><span class="nav-text">4.1官方文档</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2xcodebuild"><span class="nav-text">4.2xcodebuild</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-3执行clean操作"><span class="nav-text">4.3执行clean操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-4执行archive操作"><span class="nav-text">4.4执行archive操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-5生成ipa操作"><span class="nav-text">4.5生成ipa操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-6执行结果"><span class="nav-text">4.6执行结果</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-App配合"><span class="nav-text">5.App配合</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#5-1思路"><span class="nav-text">5.1思路</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-2脚本"><span class="nav-text">5.2脚本</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-3App"><span class="nav-text">5.3App</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-预告"><span class="nav-text">6.预告</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
