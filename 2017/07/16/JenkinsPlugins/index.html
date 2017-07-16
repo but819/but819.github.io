@@ -1,0 +1,1087 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JenkinsPlugins">
+<meta property="og:url" content="http://yoursite.com/2017/07/16/JenkinsPlugins/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail2.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail3.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail4.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail5.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail6.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/ftpConfig1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/ftpConfig2.png">
+<meta property="og:updated_time" content="2017-07-16T13:51:49.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JenkinsPlugins">
+<meta name="twitter:description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/07/16/JenkinsPlugins/"/>
+
+
+
+
+
+  <title>JenkinsPlugins | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/JenkinsPlugins/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">JenkinsPlugins</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T14:18:00+08:00">
+                2017-07-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Jenkins/" itemprop="url" rel="index">
+                    <span itemprop="name">Jenkins</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/16/JenkinsPlugins/" class="leancloud_visitors" data-flag-title="JenkinsPlugins">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。</p>
+<a id="more"></a>
+<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h3><p>先到系统管理，找到管理插件，在可选插件中找到Email Extension Plugin跟Publish Over FT后，勾选安装。</p>
+<h3 id="3-Email-Extension-Plugin"><a href="#3-Email-Extension-Plugin" class="headerlink" title="3.Email Extension Plugin"></a>3.Email Extension Plugin</h3><h4 id="3-1系统配置"><a href="#3-1系统配置" class="headerlink" title="3.1系统配置"></a>3.1系统配置</h4><p>安装完插件后需要到系统设置里面配置全局的邮件信息。</p>
+<p><img src="/2017/07/16/JenkinsPlugins/configEmail1.png"><br><img src="/2017/07/16/JenkinsPlugins/configEmail2.png"><br><img src="/2017/07/16/JenkinsPlugins/configEmail3.png"></p>
+<ul>
+<li>SMTP server<ul>
+<li>SMTP服务器地址</li>
+</ul>
+</li>
+<li>Use SMTP Authentication<ul>
+<li>使用账号认证</li>
+</ul>
+</li>
+<li>User Name<ul>
+<li>认证邮箱地址</li>
+</ul>
+</li>
+<li>Password<ul>
+<li>认证邮箱密码</li>
+</ul>
+</li>
+<li>SMTP port<ul>
+<li>SMTP服务器的端口</li>
+</ul>
+</li>
+<li>Charset<ul>
+<li>编码格式</li>
+</ul>
+</li>
+<li>Default Content Type<ul>
+<li>默认邮件内容格式，这里选的是HTML格式。</li>
+</ul>
+</li>
+<li>Recipients<ul>
+<li>默认收件人</li>
+</ul>
+</li>
+<li>Reply To List<ul>
+<li>默认回复人列表</li>
+</ul>
+</li>
+<li>Default Subject<ul>
+<li>默认邮件标题</li>
+</ul>
+</li>
+<li>Default Content<ul>
+<li>默认邮件内容</li>
+</ul>
+</li>
+<li>Default Triggers<ul>
+<li>勾选总是发邮件，这样才能确保每次操作都能收到邮件。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#这是我默认邮件的内容</div><div class="line">#所有的变量都是Jenkins自带的</div><div class="line"></div><div class="line">&lt;hr /&gt; 项目名称：$PROJECT_NAME</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; Jenkins Adress: &lt;a href=&quot;$JOB_URL&quot;&gt;$&#123;JOB_URL&#125;&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建编号：$BUILD_NUMBER</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; svn版本号：$&#123;SVN_REVISION&#125;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; svn地址：&lt;a href=&quot;$SVN_URL&quot;&gt;$&#123;SVN_URL&#125;&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建状态：$BUILD_STATUS</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 触发原因：$&#123;CAUSE&#125;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建日志地址：&lt;a href=&quot;$&#123;BUILD_URL&#125;console&quot;&gt;$&#123;BUILD_URL&#125;console&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建地址：&lt;a href=&quot;$BUILD_URL&quot;&gt;$BUILD_URL&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 变更集：$&#123;JELLY_SCRIPT,template=&quot;html&quot;&#125;</div><div class="line">&lt;br /&gt;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意点</p>
+</blockquote>
+<p>一定要注意的一个点是，Jenkins系统配置中的Jenkins Location里有一个<strong>系统管理员邮件地址</strong>，这个地址必须要与上面设置的<strong>User Name</strong>一样才能发送成功，否则会提示失败，要注意！</p>
+<p><img src="/2017/07/16/JenkinsPlugins/configEmail4.png"></p>
+<h4 id="3-2项目配置"><a href="#3-2项目配置" class="headerlink" title="3.2项目配置"></a>3.2项目配置</h4><p>把基础的邮件信息配好后，需要到对应项目里配置自定义的信息。回到项目的构建后操作添加一个叫Editable Email Notification的功能。</p>
+<p><img src="/2017/07/16/JenkinsPlugins/configEmail5.png"></p>
+<ul>
+<li>Project Recipient List<ul>
+<li>使用默认收件人列表(以都逗号形式隔开)</li>
+</ul>
+</li>
+<li>Project Reply-To List<ul>
+<li>使用默认的回复人列表。</li>
+</ul>
+</li>
+<li>Content Type<ul>
+<li>使用默认的邮件内容格式</li>
+</ul>
+</li>
+<li>Default Subject<ul>
+<li>使用默认的邮件标题</li>
+</ul>
+</li>
+<li>Default Content<ul>
+<li>使用默认的邮件内容</li>
+</ul>
+</li>
+<li>Charset<ul>
+<li>编码格式</li>
+</ul>
+</li>
+<li>Default Content Type<ul>
+<li>默认邮件内容格式，这里选的是HTML格式。</li>
+</ul>
+</li>
+<li>Attachments<ul>
+<li>附件路径(如./abc.txt)</li>
+</ul>
+</li>
+<li>Reply To List<ul>
+<li>默认回复人列表</li>
+</ul>
+</li>
+<li>Attach Build Log<ul>
+<li>是否把构建日志添加到邮件附件当中</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意点</p>
+</blockquote>
+<p>还需要<strong>Triggers</strong>高级设置中添加一个<strong>Always</strong>情况，并且需要增加发送人是<strong>我们指定的发送人</strong>，才能收到邮件。</p>
+<p><img src="/2017/07/16/JenkinsPlugins/configEmail6.png"></p>
+<h3 id="4-Publish-Over-FTP"><a href="#4-Publish-Over-FTP" class="headerlink" title="4.Publish Over FTP"></a>4.Publish Over FTP</h3><h4 id="4-1系统配置"><a href="#4-1系统配置" class="headerlink" title="4.1系统配置"></a>4.1系统配置</h4><p>安装完插件后同时也需要到系统设置里面配置全局的FTP信息。</p>
+<p><img src="/2017/07/16/JenkinsPlugins/ftpConfig1.png"></p>
+<ul>
+<li>Name<ul>
+<li>服务器定义名字</li>
+</ul>
+</li>
+<li>Hostname<ul>
+<li>服务器ip地址</li>
+</ul>
+</li>
+<li>Username<ul>
+<li>登录用户名</li>
+</ul>
+</li>
+<li>Password<ul>
+<li>登录用户密码</li>
+</ul>
+</li>
+<li>Remote Directory    <ul>
+<li>远程基础地址</li>
+<li>你存放文件所在的地址前面部分路径都是一样的</li>
+<li>可以把前部分填在这里。</li>
+</ul>
+</li>
+<li>Port    <ul>
+<li>服务器端口</li>
+</ul>
+</li>
+<li>Timeout (ms)<ul>
+<li>超时时间</li>
+</ul>
+</li>
+<li>Control encoding<ul>
+<li>使用编码</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>注意点</p>
+</blockquote>
+<p>别忘了下面有个Test Configuration按钮给你测试配置是否成功。</p>
+<h4 id="4-2项目配置"><a href="#4-2项目配置" class="headerlink" title="4.2项目配置"></a>4.2项目配置</h4><p>把基础的FTP信息配好后，也是需要到对应项目里配置自定义的信息。回到项目的构建后操作添加一个叫Send build artifacts over FTP的功能。</p>
+<p><img src="/2017/07/16/JenkinsPlugins/ftpConfig2.png"></p>
+<ul>
+<li>Source files<ul>
+<li>需要提交的源文件</li>
+</ul>
+</li>
+<li>Remove prefix<ul>
+<li>需要移除的文件</li>
+</ul>
+</li>
+<li>Remote directory<ul>
+<li>需要提交的远程路径</li>
+<li>该路径会跟前面所说的Remote Directory连接在一起</li>
+<li><strong>注意</strong>要用单引号形式包裹路径(‘’)</li>
+</ul>
+</li>
+<li>Remote directory is a date format<ul>
+<li>远程建立一个时间戳的文件夹，可在上面的Remote directory中配置。</li>
+</ul>
+</li>
+</ul>
+<h3 id="5-预告"><a href="#5-预告" class="headerlink" title="5.预告"></a>5.预告</h3><p>下次就聊聊代码分析SonarQube的使用。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/11/JenkinsComBuild/" rel="next" title="Jenkins+xcodebuild+xcrun">
+                <i class="fa fa-chevron-left"></i> Jenkins+xcodebuild+xcrun
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'JenkinsPlugins',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装"><span class="nav-text">2.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Email-Extension-Plugin"><span class="nav-text">3.Email Extension Plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1系统配置"><span class="nav-text">3.1系统配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2项目配置"><span class="nav-text">3.2项目配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Publish-Over-FTP"><span class="nav-text">4.Publish Over FTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1系统配置"><span class="nav-text">4.1系统配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2项目配置"><span class="nav-text">4.2项目配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-预告"><span class="nav-text">5.预告</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
