@@ -93,25 +93,23 @@
 
 
 
-<meta name="description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
+<meta name="description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JenkinsPlugins">
-<meta property="og:url" content="http://yoursite.com/2017/07/16/JenkinsPlugins/index.html">
+<meta property="og:title" content="JenkinsSonar-安装">
+<meta property="og:url" content="http://yoursite.com/2017/09/16/JenkinsSonar/index.html">
 <meta property="og:site_name" content="b_ut">
-<meta property="og:description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail1.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail2.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail3.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail4.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail5.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail6.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/ftpConfig1.png">
-<meta property="og:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/ftpConfig2.png">
-<meta property="og:updated_time" content="2017-09-18T15:29:31.000Z">
+<meta property="og:description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/SonarQube.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-1.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-2.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-3.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-4.png">
+<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-5.png">
+<meta property="og:updated_time" content="2017-09-18T15:29:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JenkinsPlugins">
-<meta name="twitter:description" content="1.前言Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。">
-<meta name="twitter:image" content="http://yoursite.com/2017/07/16/JenkinsPlugins/configEmail1.png">
+<meta name="twitter:title" content="JenkinsSonar-安装">
+<meta name="twitter:description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
+<meta name="twitter:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/SonarQube.png">
 
 
 
@@ -139,13 +137,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/07/16/JenkinsPlugins/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/09/16/JenkinsSonar/"/>
 
 
 
 
 
-  <title>JenkinsPlugins | b_ut</title>
+  <title>JenkinsSonar-安装 | b_ut</title>
   
 
 
@@ -294,7 +292,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/16/JenkinsPlugins/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/JenkinsSonar/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="b_ut">
@@ -311,7 +309,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JenkinsPlugins</h1>
+          <h1 class="post-title" itemprop="name headline">JenkinsSonar-安装</h1>
         
 
         <div class="post-meta">
@@ -323,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-16T14:18:00+08:00">
-                2017-07-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T22:21:59+08:00">
+                2017-09-16
               </time>
             
 
@@ -363,7 +361,7 @@
 
           
           
-             <span id="/2017/07/16/JenkinsPlugins/" class="leancloud_visitors" data-flag-title="JenkinsPlugins">
+             <span id="/2017/09/16/JenkinsSonar/" class="leancloud_visitors" data-flag-title="JenkinsSonar-安装">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -391,181 +389,58 @@
       
 
       
-        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>Jenkins自动化打包完成后，我们还需要做其他后续操作。比如将ipa文件放到ftp、将打包结果发邮件到对应负责人、代码分析等等。这次带来的是邮件插件(Email Extension Plugin)和FTP插件(Publish Over FTP)。</p>
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。</p>
 <a id="more"></a>
-<h3 id="2-安装"><a href="#2-安装" class="headerlink" title="2.安装"></a>2.安装</h3><p>先到系统管理，找到管理插件，在可选插件中找到Email Extension Plugin跟Publish Over FT后，勾选安装。</p>
-<h3 id="3-Email-Extension-Plugin"><a href="#3-Email-Extension-Plugin" class="headerlink" title="3.Email Extension Plugin"></a>3.Email Extension Plugin</h3><h4 id="3-1系统配置"><a href="#3-1系统配置" class="headerlink" title="3.1系统配置"></a>3.1系统配置</h4><p>安装完插件后需要到系统设置里面配置全局的邮件信息。</p>
-<p><img src="/2017/07/16/JenkinsPlugins/configEmail1.png"><br><img src="/2017/07/16/JenkinsPlugins/configEmail2.png"><br><img src="/2017/07/16/JenkinsPlugins/configEmail3.png"></p>
 <ul>
-<li>SMTP server<ul>
-<li>SMTP服务器地址</li>
-</ul>
-</li>
-<li>Use SMTP Authentication<ul>
-<li>使用账号认证</li>
-</ul>
-</li>
-<li>User Name<ul>
-<li>认证邮箱地址</li>
-</ul>
-</li>
-<li>Password<ul>
-<li>认证邮箱密码</li>
-</ul>
-</li>
-<li>SMTP port<ul>
-<li>SMTP服务器的端口</li>
-</ul>
-</li>
-<li>Charset<ul>
-<li>编码格式</li>
-</ul>
-</li>
-<li>Default Content Type<ul>
-<li>默认邮件内容格式，这里选的是HTML格式。</li>
-</ul>
-</li>
-<li>Recipients<ul>
-<li>默认收件人</li>
-</ul>
-</li>
-<li>Reply To List<ul>
-<li>默认回复人列表</li>
-</ul>
-</li>
-<li>Default Subject<ul>
-<li>默认邮件标题</li>
-</ul>
-</li>
-<li>Default Content<ul>
-<li>默认邮件内容</li>
-</ul>
-</li>
-<li>Default Triggers<ul>
-<li>勾选总是发邮件，这样才能确保每次操作都能收到邮件。</li>
+<li>安装软件<ul>
+<li>JDK</li>
+<li>HomeBrew</li>
+<li>xctool</li>
+<li>OCLint</li>
+<li>Gcovr</li>
+<li>SonarQube</li>
+<li>SonarQube Scanner</li>
+<li>Mysql</li>
 </ul>
 </li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#这是我默认邮件的内容</div><div class="line">#所有的变量都是Jenkins自带的</div><div class="line"></div><div class="line">&lt;hr /&gt; 项目名称：$PROJECT_NAME</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; Jenkins Adress: &lt;a href=&quot;$JOB_URL&quot;&gt;$&#123;JOB_URL&#125;&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建编号：$BUILD_NUMBER</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; svn版本号：$&#123;SVN_REVISION&#125;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; svn地址：&lt;a href=&quot;$SVN_URL&quot;&gt;$&#123;SVN_URL&#125;&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建状态：$BUILD_STATUS</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 触发原因：$&#123;CAUSE&#125;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建日志地址：&lt;a href=&quot;$&#123;BUILD_URL&#125;console&quot;&gt;$&#123;BUILD_URL&#125;console&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 构建地址：&lt;a href=&quot;$BUILD_URL&quot;&gt;$BUILD_URL&lt;/a&gt;</div><div class="line">&lt;br /&gt;</div><div class="line">&lt;hr /&gt; 变更集：$&#123;JELLY_SCRIPT,template=&quot;html&quot;&#125;</div><div class="line">&lt;br /&gt;</div></pre></td></tr></table></figure>
-<blockquote>
-<p>注意点</p>
-</blockquote>
-<p>一定要注意的一个点是，Jenkins系统配置中的Jenkins Location里有一个<strong>系统管理员邮件地址</strong>，这个地址必须要与上面设置的<strong>User Name</strong>一样才能发送成功，否则会提示失败，要注意！</p>
-<p><img src="/2017/07/16/JenkinsPlugins/configEmail4.png"></p>
-<h4 id="3-2项目配置"><a href="#3-2项目配置" class="headerlink" title="3.2项目配置"></a>3.2项目配置</h4><p>把基础的邮件信息配好后，需要到对应项目里配置自定义的信息。回到项目的构建后操作添加一个叫Editable Email Notification的功能。</p>
-<p><img src="/2017/07/16/JenkinsPlugins/configEmail5.png"></p>
-<ul>
-<li>Project Recipient List<ul>
-<li>使用默认收件人列表(以都逗号形式隔开)</li>
-</ul>
-</li>
-<li>Project Reply-To List<ul>
-<li>使用默认的回复人列表。</li>
-</ul>
-</li>
-<li>Content Type<ul>
-<li>使用默认的邮件内容格式</li>
-</ul>
-</li>
-<li>Default Subject<ul>
-<li>使用默认的邮件标题</li>
-</ul>
-</li>
-<li>Default Content<ul>
-<li>使用默认的邮件内容</li>
-</ul>
-</li>
-<li>Charset<ul>
-<li>编码格式</li>
-</ul>
-</li>
-<li>Default Content Type<ul>
-<li>默认邮件内容格式，这里选的是HTML格式。</li>
-</ul>
-</li>
-<li>Attachments<ul>
-<li>附件路径(如./abc.txt)</li>
-</ul>
-</li>
-<li>Reply To List<ul>
-<li>默认回复人列表</li>
-</ul>
-</li>
-<li>Attach Build Log<ul>
-<li>是否把构建日志添加到邮件附件当中</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>注意点</p>
-</blockquote>
-<p>还需要<strong>Triggers</strong>高级设置中添加一个<strong>Always</strong>情况，并且需要增加发送人是<strong>我们指定的发送人</strong>，才能收到邮件。</p>
-<p><img src="/2017/07/16/JenkinsPlugins/configEmail6.png"></p>
-<h3 id="4-Publish-Over-FTP"><a href="#4-Publish-Over-FTP" class="headerlink" title="4.Publish Over FTP"></a>4.Publish Over FTP</h3><h4 id="4-1系统配置"><a href="#4-1系统配置" class="headerlink" title="4.1系统配置"></a>4.1系统配置</h4><p>安装完插件后同时也需要到系统设置里面配置全局的FTP信息。</p>
-<p><img src="/2017/07/16/JenkinsPlugins/ftpConfig1.png"></p>
-<ul>
-<li>Name<ul>
-<li>服务器定义名字</li>
-</ul>
-</li>
-<li>Hostname<ul>
-<li>服务器ip地址</li>
-</ul>
-</li>
-<li>Username<ul>
-<li>登录用户名</li>
-</ul>
-</li>
-<li>Password<ul>
-<li>登录用户密码</li>
-</ul>
-</li>
-<li>Remote Directory    <ul>
-<li>远程基础地址</li>
-<li>你存放文件所在的地址前面部分路径都是一样的</li>
-<li>可以把前部分填在这里。</li>
-</ul>
-</li>
-<li>Port    <ul>
-<li>服务器端口</li>
-</ul>
-</li>
-<li>Timeout (ms)<ul>
-<li>超时时间</li>
-</ul>
-</li>
-<li>Control encoding<ul>
-<li>使用编码</li>
-</ul>
-</li>
-</ul>
-<blockquote>
-<p>注意点</p>
-</blockquote>
-<p>别忘了下面有个Test Configuration按钮给你测试配置是否成功。</p>
-<h4 id="4-2项目配置"><a href="#4-2项目配置" class="headerlink" title="4.2项目配置"></a>4.2项目配置</h4><p>把基础的FTP信息配好后，也是需要到对应项目里配置自定义的信息。回到项目的构建后操作添加一个叫Send build artifacts over FTP的功能。</p>
-<p><img src="/2017/07/16/JenkinsPlugins/ftpConfig2.png"></p>
-<ul>
-<li>Source files<ul>
-<li>需要提交的源文件</li>
-</ul>
-</li>
-<li>Remove prefix<ul>
-<li>需要移除的文件</li>
-</ul>
-</li>
-<li>Remote directory<ul>
-<li>需要提交的远程路径</li>
-<li>该路径会跟前面所说的Remote Directory连接在一起</li>
-<li><strong>注意</strong>要用单引号形式包裹路径(‘’)</li>
-</ul>
-</li>
-<li>Remote directory is a date format<ul>
-<li>远程建立一个时间戳的文件夹，可在上面的Remote directory中配置。</li>
-</ul>
-</li>
-</ul>
-<h3 id="5-预告"><a href="#5-预告" class="headerlink" title="5.预告"></a>5.预告</h3><p>下次就聊聊代码分析SonarQube的使用。</p>
+<h3 id="2-JDK"><a href="#2-JDK" class="headerlink" title="2.JDK"></a>2.JDK</h3><p>因为Sonar需要JDK环境支持，我们可以直接到官网下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">安装</a>即可。</p>
+<h3 id="3-HomeBrew"><a href="#3-HomeBrew" class="headerlink" title="3.HomeBrew"></a>3.HomeBrew</h3><p>HomeBrew是macOS上的软件包管理工具，可以在mac的终端上安装或卸载软件，同时也方便以下软件的安装。</p>
+<h4 id="3-1安装"><a href="#3-1安装" class="headerlink" title="3.1安装"></a>3.1安装</h4><p><a href="https://brew.sh/" target="_blank" rel="external">官网</a>提供的安装命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure>
+<h4 id="3-2安装问题"><a href="#3-2安装问题" class="headerlink" title="3.2安装问题"></a>3.2安装问题</h4><p>当前用户没有写入权限所报的错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Error: /usr/local/Cellar is not writable. You should change the</div><div class="line">ownership and permissions of /usr/local/Cellar back to your</div><div class="line">user account:</div><div class="line">sudo chown -R $(whoami) /usr/local/Cellar</div><div class="line">Failed during: /usr/local/bin/brew update --force</div></pre></td></tr></table></figure>
+<p>解决方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//将/usr/local归属到admin中</div><div class="line">sudo chgrp -R admin /usr/local</div><div class="line">//将/usr/local改成写权限</div><div class="line">sudo chmod -R g+w /usr/local</div></pre></td></tr></table></figure>
+<h3 id="4-xctool"><a href="#4-xctool" class="headerlink" title="4.xctool"></a>4.xctool</h3><p>xctool是Facebook的一个基于xcodebuild开源构建工具，可以更容易的对iOS app与Mac app进行构建与测试。但是Facebook已发声明不再支持构建功能，仅保留测试功能，并且推荐使用源生的xcodebuild工具，所以这个可以不用安装，但也提供安装命令。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install xctool</div></pre></td></tr></table></figure>
+<h3 id="5-OCLint"><a href="#5-OCLint" class="headerlink" title="5.OCLint"></a>5.OCLint</h3><p>摘自官方解释：OCLint是一个静态代码分析工具，通过检查C、C++和objective - C代码来提高质量和减少缺陷。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install Caskroom/cask/oclint</div></pre></td></tr></table></figure>
+<h3 id="6-Gcovr"><a href="#6-Gcovr" class="headerlink" title="6.Gcovr"></a>6.Gcovr</h3><p>Gcovr是一个用于生成单元测试覆盖率报告的工具。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install gcovr</div></pre></td></tr></table></figure>
+<h3 id="7-SonarQube"><a href="#7-SonarQube" class="headerlink" title="7.SonarQube"></a>7.SonarQube</h3><p>这个就是我们所说的代码质量管理平台。</p>
+<h4 id="7-1安装"><a href="#7-1安装" class="headerlink" title="7.1安装"></a>7.1安装</h4><p>直接到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载安装包进行安装，我选择的是5.6.6版本，因为我们最后执行的<a href="https://github.com/octo-technology/sonar-objective-c" target="_blank" rel="external">脚本</a>是基于SonarQube5.X的版本是运行的，可能大家不了解这脚本的作用，先留个疑问。到后面会重新讲解，配置内容同样也是。</p>
+<p>下载完成，解压后，我把应用包放在<code>/usr/local</code>目录下，然后在终端中cd到<code>/usr/local/sonarqube-5.6.6/bin/macosx-universal-64</code>下执行.sh文件或者直接执行以下命令</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/sonarqube-5.6.6/bin/macosx-universal-64/sonar.sh console</div></pre></td></tr></table></figure>
+<p>执行后，我们可以在浏览器中访问<code>http://localhost:9000</code>就能看到我们的SonarQube界面。</p>
+<p><img src="/2017/09/16/JenkinsSonar/SonarQube.png"></p>
+<h3 id="8-SonarQube-Scanner"><a href="#8-SonarQube-Scanner" class="headerlink" title="8.SonarQube Scanner"></a>8.SonarQube Scanner</h3><p>SonarQube Scanner，其实就是一个代码扫描工具，负责扫描项目后把结果传送到SonarQube去，最后让SonarQube做代码分析的功能。</p>
+<h4 id="8-1安装"><a href="#8-1安装" class="headerlink" title="8.1安装"></a>8.1安装</h4><p>直接到<a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">官网</a>选择Mac版本下载安装包，下载完成，解压后，我把应用包放在<code>/usr/local</code>目录下即可，配置内容到了后面再细说。</p>
+<h3 id="9-Mysql"><a href="#9-Mysql" class="headerlink" title="9.Mysql"></a>9.Mysql</h3><p>因为SonarQube需要用到数据库记录数据，而官方有提供几种数据库类型，最后我选择了用Mysql。</p>
+<h4 id="9-1下载"><a href="#9-1下载" class="headerlink" title="9.1下载"></a>9.1下载</h4><p>直接到<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">官网</a>选择对应的包下载，我最后选择了5.7.16版本。上面已经说到了SonarQube使用的是5.X版本，而我一开始选的是5.7.17，安装后发现不能兼容到SonarQube的5.X版本。</p>
+<h4 id="9-2安装"><a href="#9-2安装" class="headerlink" title="9.2安装"></a>9.2安装</h4><p>下载完成后双击安装包，再选择对应的pkg进行安装。</p>
+<div align="center"><br><img src="/2017/09/16/JenkinsSonar/Sql-1.png"><br></div>
+
+<h4 id="9-3信息保留"><a href="#9-3信息保留" class="headerlink" title="9.3信息保留"></a>9.3信息保留</h4><p>安装完成后会有弹框，弹框内容就是本地Mysql的初始账号跟密码，要保存好，回头有空的时候可以重新设置新的密码。到这里就完成了Mysql安装步骤了。</p>
+<div align="center"><br><img src="/2017/09/16/JenkinsSonar/Sql-2.png"><br></div>
+
+<h4 id="9-4启动"><a href="#9-4启动" class="headerlink" title="9.4启动"></a>9.4启动</h4><p>启动Workbench，会弹出账号密码的输入，直接输入9.3的信息即可，输入后就会看到启动页面。</p>
+<p><img src="/2017/09/16/JenkinsSonar/Sql-3.png"></p>
+<h4 id="9-5创建连接"><a href="#9-5创建连接" class="headerlink" title="9.5创建连接"></a>9.5创建连接</h4><p>因为Workbench是个可视化客户端，所以需要连上本地数据库才能查看数据，所以我们需要创建一个连接，绑上数据库，账号密码跟9.3的信息一致。</p>
+<p><img src="/2017/09/16/JenkinsSonar/Sql-4.png"></p>
+<h4 id="9-6可视化"><a href="#9-6可视化" class="headerlink" title="9.6可视化"></a>9.6可视化</h4><p>连上完成后，我们就会看到Workbench可视化的数据库界面了。</p>
+<p><img src="/2017/09/16/JenkinsSonar/Sql-5.png"></p>
+<h3 id="10-预告"><a href="#10-预告" class="headerlink" title="10.预告"></a>10.预告</h3><p>下次就聊聊这系列的软件的配置与项目的配置。</p>
 
       
     </div>
@@ -602,8 +477,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/11/JenkinsComBuild/" rel="next" title="Jenkins+xcodebuild">
-                <i class="fa fa-chevron-left"></i> Jenkins+xcodebuild
+              <a href="/2017/07/16/JenkinsPlugins/" rel="next" title="JenkinsPlugins">
+                <i class="fa fa-chevron-left"></i> JenkinsPlugins
               </a>
             
           </div>
@@ -611,10 +486,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/09/16/JenkinsSonar/" rel="prev" title="JenkinsSonar-安装">
-                JenkinsSonar-安装 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -647,7 +518,7 @@
 <script>
   var gitment = new Gitment({
     // 根据文章标题设置唯一评论id
-    id: 'JenkinsPlugins',
+    id: 'JenkinsSonar-Install',
     owner: 'but819',
     repo: 'but819.github.io',
     oauth: {
@@ -778,7 +649,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-安装"><span class="nav-text">2.安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Email-Extension-Plugin"><span class="nav-text">3.Email Extension Plugin</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1系统配置"><span class="nav-text">3.1系统配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2项目配置"><span class="nav-text">3.2项目配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Publish-Over-FTP"><span class="nav-text">4.Publish Over FTP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-1系统配置"><span class="nav-text">4.1系统配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2项目配置"><span class="nav-text">4.2项目配置</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-预告"><span class="nav-text">5.预告</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JDK"><span class="nav-text">2.JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-HomeBrew"><span class="nav-text">3.HomeBrew</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1安装"><span class="nav-text">3.1安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2安装问题"><span class="nav-text">3.2安装问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-xctool"><span class="nav-text">4.xctool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-OCLint"><span class="nav-text">5.OCLint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Gcovr"><span class="nav-text">6.Gcovr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-SonarQube"><span class="nav-text">7.SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1安装"><span class="nav-text">7.1安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-SonarQube-Scanner"><span class="nav-text">8.SonarQube Scanner</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1安装"><span class="nav-text">8.1安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Mysql"><span class="nav-text">9.Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1下载"><span class="nav-text">9.1下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2安装"><span class="nav-text">9.2安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-3信息保留"><span class="nav-text">9.3信息保留</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-4启动"><span class="nav-text">9.4启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-5创建连接"><span class="nav-text">9.5创建连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-6可视化"><span class="nav-text">9.6可视化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-预告"><span class="nav-text">10.预告</span></a></li></ol></div>
             
 
           </div>
