@@ -99,7 +99,6 @@
 <meta property="og:url" content="http://yoursite.com/2017/06/24/CusNext/index.html">
 <meta property="og:site_name" content="b_ut">
 <meta property="og:description" content="1.前言由于想在原来new-vno的主题上能实现一行多图并排显示以及加入Gitment评论功能，但是发现一直没成功，所以直接换回Next主题了。然后这篇文章就是把Next主题的一些配置以及拓展功能记录下来。">
-<meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/erroImage.png">
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
@@ -108,11 +107,11 @@
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
 <meta property="og:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
-<meta property="og:updated_time" content="2017-06-27T09:58:59.000Z">
+<meta property="og:updated_time" content="2018-02-14T08:09:16.025Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自定义Next主题">
 <meta name="twitter:description" content="1.前言由于想在原来new-vno的主题上能实现一行多图并排显示以及加入Gitment评论功能，但是发现一直没成功，所以直接换回Next主题了。然后这篇文章就是把Next主题的一些配置以及拓展功能记录下来。">
-<meta name="twitter:image" content="http://yoursite.com/2017/06/24/CusNext/erroImage.png">
+<meta name="twitter:image" content="http://yoursite.com/2017/06/24/CusNext/icon.png">
 
 
 
@@ -401,8 +400,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">.page-post-detail .post-body .group-picture-column &#123;</div><div class="line">  //float: none;</div><div class="line">  margin-top: 10px;</div><div class="line">  //width: auto !important;</div><div class="line">  img &#123; margin: 0 auto; &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h4 id="2-3使用多图"><a href="#2-3使用多图" class="headerlink" title="2.3使用多图"></a>2.3使用多图</h4><p>在Next主题<code>/scripts/tags/group-pictures.js</code>目录中，有说明怎么使用，具体可以点进去看看，比如我们先实现一个一行三张图片并排的样式。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123;% gp 3-1 %&#125;</div><div class="line">&lt;img src=&quot;CusNext/icon.png&quot;&gt;</div><div class="line">&lt;img src=&quot;CusNext/icon.png&quot;&gt;</div><div class="line">&lt;img src=&quot;CusNext/icon.png&quot;&gt;</div><div class="line">&#123;% endgp %&#125;</div></pre></td></tr></table></figure>
-<p>但你会发现跑起来却是这样的。</p>
-<p><img src="/2017/06/24/CusNext/erroImage.png"></p>
+<p>但你会发现跑起来却是一行一个的效果。</p>
 <p>其实进去<code>group-pictures.js</code>调一下3-1的那段代码就好了，把pictures包成数组就好了，然后再运行看看效果。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 3-1</div><div class="line"> *</div><div class="line"> * □ □ □</div><div class="line"> *</div><div class="line"> * @param pictures</div><div class="line"> */</div><div class="line">group3Layout1: function (pictures) &#123;</div><div class="line">  return this.getHTML([pictures]);</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
 <div class="group-picture"><div class="group-picture-container"><div class="group-picture-row"><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/06/24/CusNext/icon.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/06/24/CusNext/icon.png"></div><div class="group-picture-column" style="width: 33.333333333333336%;"><img src="/2017/06/24/CusNext/icon.png"></div></div><div class="group-picture-row"></div></div></div>
@@ -443,6 +441,7 @@
 <p>不蒜子是统计网页uv、pv，显示在网页的底部，而文章的pv则显示在文章中。LeanCloud可以统计单篇文章的阅读量，也可以在首页显示。然后我现在是把不蒜子文章的pv关掉，用LeanCloud来统计。</p>
 <h3 id="6-自定义布局"><a href="#6-自定义布局" class="headerlink" title="6.自定义布局"></a>6.自定义布局</h3><p>发现在Next主题中<code>source/css/_custom/custom.styl</code>添加自己的样式可以覆盖原来的样式。我就稍微调了一些小布局。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">//首页头部样式</div><div class="line">.header &#123;</div><div class="line">    background: #E6E6FA;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//首页阅读全文样式  </div><div class="line">.post-button &#123;</div><div class="line">    margin-top: 30px;</div><div class="line">    text-align: center;</div><div class="line">&#125;</div><div class="line">.post-button .btn &#123;</div><div class="line">    color: #555;</div><div class="line">    font-size: 15px;</div><div class="line">    background: #fff;</div><div class="line">    line-height: 2;</div><div class="line">    padding: 0 20px;</div><div class="line">    margin: 0 0 0 0 !important;</div><div class="line">    border-bottom: 0;</div><div class="line">    border-radius: 2px;</div><div class="line">    border: 2px solid #555;</div><div class="line">&#125;</div><div class="line">.post-button .btn:hover &#123;</div><div class="line">  border-color: #222;</div><div class="line">  color: #fff;</div><div class="line">  background: #222;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -677,7 +676,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
