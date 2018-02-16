@@ -93,23 +93,19 @@
 
 
 
-<meta name="description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
+<meta name="description" content="1.前言上文已经把Sonar所需的环境给搭建起来，接下来就需要配置Sonar以及将其应用到Jenkins，以下是本文内容的目录。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="JenkinsSonar-安装">
-<meta property="og:url" content="http://yoursite.com/2017/09/16/JenkinsSonar/index.html">
+<meta property="og:title" content="JenkinsSonar-配置">
+<meta property="og:url" content="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/index.html">
 <meta property="og:site_name" content="b_ut">
-<meta property="og:description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/SonarQube.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-1.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-2.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-3.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-4.png">
-<meta property="og:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/Sql-5.png">
-<meta property="og:updated_time" content="2017-09-18T15:38:46.000Z">
+<meta property="og:description" content="1.前言上文已经把Sonar所需的环境给搭建起来，接下来就需要配置Sonar以及将其应用到Jenkins，以下是本文内容的目录。">
+<meta property="og:image" content="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/addRule1.png">
+<meta property="og:image" content="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/addRule2.png">
+<meta property="og:updated_time" content="2018-02-16T06:22:05.984Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="JenkinsSonar-安装">
-<meta name="twitter:description" content="1.前言这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。">
-<meta name="twitter:image" content="http://yoursite.com/2017/09/16/JenkinsSonar/SonarQube.png">
+<meta name="twitter:title" content="JenkinsSonar-配置">
+<meta name="twitter:description" content="1.前言上文已经把Sonar所需的环境给搭建起来，接下来就需要配置Sonar以及将其应用到Jenkins，以下是本文内容的目录。">
+<meta name="twitter:image" content="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/addRule1.png">
 
 
 
@@ -137,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/09/16/JenkinsSonar/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/"/>
 
 
 
 
 
-  <title>JenkinsSonar-安装 | b_ut</title>
+  <title>JenkinsSonar-配置 | b_ut</title>
   
 
 
@@ -292,7 +288,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/09/16/JenkinsSonar/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/14/JenkinsSonar(Config)/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="b_ut">
@@ -309,7 +305,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">JenkinsSonar-安装</h1>
+          <h1 class="post-title" itemprop="name headline">JenkinsSonar-配置</h1>
         
 
         <div class="post-meta">
@@ -321,8 +317,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-16T22:21:59+08:00">
-                2017-09-16
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-14T16:24:30+08:00">
+                2018-02-14
               </time>
             
 
@@ -361,7 +357,7 @@
 
           
           
-             <span id="/2017/09/16/JenkinsSonar/" class="leancloud_visitors" data-flag-title="JenkinsSonar-安装">
+             <span id="/2018/02/14/JenkinsSonar(Config)/" class="leancloud_visitors" data-flag-title="JenkinsSonar-配置">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -389,58 +385,43 @@
       
 
       
-        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>这次带来的是代码分析工具Sonar，该工具用于提高代码质量。它可以发现代码里隐藏的bug与错误语法，还有代码重复率等。同时它所支持的语言类型有C/C++、JavaScript、C#、Java、Objective-C、Swift、Web等。由于所涉及的东西比较多，全部内容分成两篇文章讲解，以下是本文内容的目录。</p>
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>上文已经把Sonar所需的环境给搭建起来，接下来就需要配置Sonar以及将其应用到Jenkins，以下是本文内容的目录。</p>
 <a id="more"></a>
 <ul>
-<li>安装软件<ul>
-<li>JDK</li>
-<li>HomeBrew</li>
-<li>xctool</li>
-<li>OCLint</li>
-<li>Gcovr</li>
-<li>SonarQube</li>
-<li>SonarQube Scanner</li>
+<li>配置软件<ul>
 <li>Mysql</li>
+<li>SonarQube<ul>
+<li>配置文件</li>
+<li>插件更换</li>
+<li>激活规则</li>
 </ul>
 </li>
+<li>SonarQube Scanner</li>
 </ul>
-<h3 id="2-JDK"><a href="#2-JDK" class="headerlink" title="2.JDK"></a>2.JDK</h3><p>因为Sonar需要JDK环境支持，我们可以直接到官网下载<a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">安装</a>即可。</p>
-<h3 id="3-HomeBrew"><a href="#3-HomeBrew" class="headerlink" title="3.HomeBrew"></a>3.HomeBrew</h3><p>HomeBrew是macOS上的软件包管理工具，可以在mac的终端上安装或卸载软件，同时也方便以下软件的安装。</p>
-<h4 id="3-1安装"><a href="#3-1安装" class="headerlink" title="3.1安装"></a>3.1安装</h4><p><a href="https://brew.sh/" target="_blank" rel="external">官网</a>提供的安装命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/bin/ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;</div></pre></td></tr></table></figure>
-<h4 id="3-2安装问题"><a href="#3-2安装问题" class="headerlink" title="3.2安装问题"></a>3.2安装问题</h4><p>当前用户没有写入权限所报的错误</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Error: /usr/local/Cellar is not writable. You should change the</div><div class="line">ownership and permissions of /usr/local/Cellar back to your</div><div class="line">user account:</div><div class="line">sudo chown -R $(whoami) /usr/local/Cellar</div><div class="line">Failed during: /usr/local/bin/brew update --force</div></pre></td></tr></table></figure>
-<p>解决方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">//将/usr/local归属到admin中</div><div class="line">sudo chgrp -R admin /usr/local</div><div class="line">//将/usr/local改成写权限</div><div class="line">sudo chmod -R g+w /usr/local</div></pre></td></tr></table></figure>
-<h3 id="4-xctool"><a href="#4-xctool" class="headerlink" title="4.xctool"></a>4.xctool</h3><p>xctool是Facebook的一个基于xcodebuild开源构建工具，可以更容易的对iOS app与Mac app进行构建与测试。但是Facebook已发声明不再支持构建功能，仅保留测试功能，并且推荐使用源生的xcodebuild工具，所以这个可以不用安装，但也提供安装命令。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install xctool</div></pre></td></tr></table></figure>
-<h3 id="5-OCLint"><a href="#5-OCLint" class="headerlink" title="5.OCLint"></a>5.OCLint</h3><p>摘自官方解释：OCLint是一个静态代码分析工具，通过检查C、C++和objective - C代码来提高质量和减少缺陷。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install Caskroom/cask/oclint</div></pre></td></tr></table></figure>
-<h3 id="6-Gcovr"><a href="#6-Gcovr" class="headerlink" title="6.Gcovr"></a>6.Gcovr</h3><p>Gcovr是一个用于生成单元测试覆盖率报告的工具。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">brew install gcovr</div></pre></td></tr></table></figure>
-<h3 id="7-SonarQube"><a href="#7-SonarQube" class="headerlink" title="7.SonarQube"></a>7.SonarQube</h3><p>这个就是我们所说的代码质量管理平台。</p>
-<h4 id="7-1安装"><a href="#7-1安装" class="headerlink" title="7.1安装"></a>7.1安装</h4><p>直接到<a href="https://www.sonarqube.org/downloads/" target="_blank" rel="external">官网</a>下载安装包进行安装，我选择的是5.6.6版本，因为我们最后执行的<a href="https://github.com/octo-technology/sonar-objective-c" target="_blank" rel="external">脚本</a>是基于SonarQube5.X的版本是运行的，可能大家不了解这脚本的作用，先留个疑问。到后面会重新讲解，配置内容同样也是。</p>
-<p>下载完成，解压后，我把应用包放在<code>/usr/local</code>目录下，然后在终端中cd到<code>/usr/local/sonarqube-5.6.6/bin/macosx-universal-64</code>下执行.sh文件或者直接执行以下命令</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">/usr/local/sonarqube-5.6.6/bin/macosx-universal-64/sonar.sh console</div></pre></td></tr></table></figure>
-<p>执行后，我们可以在浏览器中访问<code>http://localhost:9000</code>就能看到我们的SonarQube界面。</p>
-<p><img src="/2017/09/16/JenkinsSonar/SonarQube.png"></p>
-<h3 id="8-SonarQube-Scanner"><a href="#8-SonarQube-Scanner" class="headerlink" title="8.SonarQube Scanner"></a>8.SonarQube Scanner</h3><p>SonarQube Scanner，其实就是一个代码扫描工具，负责扫描项目后把结果传送到SonarQube去，最后让SonarQube做代码分析的功能。</p>
-<h4 id="8-1安装"><a href="#8-1安装" class="headerlink" title="8.1安装"></a>8.1安装</h4><p>直接到<a href="https://docs.sonarqube.org/display/SCAN/Analyzing+with+SonarQube+Scanner" target="_blank" rel="external">官网</a>选择Mac版本下载安装包，下载完成，解压后，我把应用包放在<code>/usr/local</code>目录下即可，配置内容到了后面再细说。</p>
-<h3 id="9-Mysql"><a href="#9-Mysql" class="headerlink" title="9.Mysql"></a>9.Mysql</h3><p>因为SonarQube需要用到数据库记录数据，而官方有提供几种数据库类型，最后我选择了用Mysql。</p>
-<h4 id="9-1下载"><a href="#9-1下载" class="headerlink" title="9.1下载"></a>9.1下载</h4><p>直接到<a href="https://dev.mysql.com/downloads/mysql/" target="_blank" rel="external">官网</a>选择对应的包下载，我最后选择了5.7.16版本。上面已经说到了SonarQube使用的是5.X版本，而我一开始选的是5.7.17，安装后发现不能兼容到SonarQube的5.X版本。</p>
-<h4 id="9-2安装"><a href="#9-2安装" class="headerlink" title="9.2安装"></a>9.2安装</h4><p>下载完成后双击安装包，再选择对应的pkg进行安装。</p>
-<div align="center"><br><img src="/2017/09/16/JenkinsSonar/Sql-1.png"><br></div>
-
-<h4 id="9-3信息保留"><a href="#9-3信息保留" class="headerlink" title="9.3信息保留"></a>9.3信息保留</h4><p>安装完成后会有弹框，弹框内容就是本地Mysql的初始账号跟密码，要保存好，回头有空的时候可以重新设置新的密码。到这里就完成了Mysql安装步骤了。</p>
-<div align="center"><br><img src="/2017/09/16/JenkinsSonar/Sql-2.png"><br></div>
-
-<h4 id="9-4启动"><a href="#9-4启动" class="headerlink" title="9.4启动"></a>9.4启动</h4><p>启动Workbench，会弹出账号密码的输入，直接输入9.3的信息即可，输入后就会看到启动页面。</p>
-<p><img src="/2017/09/16/JenkinsSonar/Sql-3.png"></p>
-<h4 id="9-5创建连接"><a href="#9-5创建连接" class="headerlink" title="9.5创建连接"></a>9.5创建连接</h4><p>因为Workbench是个可视化客户端，所以需要连上本地数据库才能查看数据，所以我们需要创建一个连接，绑上数据库，账号密码跟9.3的信息一致。</p>
-<p><img src="/2017/09/16/JenkinsSonar/Sql-4.png"></p>
-<h4 id="9-6可视化"><a href="#9-6可视化" class="headerlink" title="9.6可视化"></a>9.6可视化</h4><p>连上完成后，我们就会看到Workbench可视化的数据库界面了。</p>
-<p><img src="/2017/09/16/JenkinsSonar/Sql-5.png"></p>
-<h3 id="10-预告"><a href="#10-预告" class="headerlink" title="10.预告"></a>10.预告</h3><p>下次就聊聊这系列的软件的配置与项目的配置。</p>
+</li>
+<li>项目配置<ul>
+<li>配置脚本</li>
+</ul>
+</li>
+<li>Jenkins配置</li>
+</ul>
+<h3 id="2-配置软件"><a href="#2-配置软件" class="headerlink" title="2.配置软件"></a>2.配置软件</h3><h4 id="2-1Mysql"><a href="#2-1Mysql" class="headerlink" title="2.1Mysql"></a>2.1Mysql</h4><p>根据上文安装好Mysql之后，还需要创建一个数据库供Sonar使用，在Mysql界面上执行以下语句即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">#创建一个依据UTF8编码的sonar数据表。</div><div class="line">CREATE DATABASE sonar CHARACTER SET utf8 COLLATE utf8_general_ci;</div><div class="line">#创建一个名为sonar，密码为sonar的账号</div><div class="line">CREATE USER &apos;sonar&apos; IDENTIFIED BY &apos;sonar&apos;;</div><div class="line">#授权sonar用户拥有sonar数据库</div><div class="line">GRANT ALL ON sonar.* TO &apos;sonar&apos;@&apos;%&apos; IDENTIFIED BY &apos;sonar&apos;;</div><div class="line">#授权sonar用户拥有sonar数据库</div><div class="line">GRANT ALL ON sonar.* TO &apos;sonar&apos;@&apos;localhost&apos; IDENTIFIED BY &apos;sonar&apos;;</div><div class="line">#重新加载权限</div><div class="line">FLUSH PRIVILEGES;</div></pre></td></tr></table></figure>
+<h4 id="2-2SonarQube"><a href="#2-2SonarQube" class="headerlink" title="2.2SonarQube"></a>2.2SonarQube</h4><p>根据上文安装好Mysql之后，还需要配置具体的信息才能让SonarQube关联起来。</p>
+<h5 id="2-2-1配置文件"><a href="#2-2-1配置文件" class="headerlink" title="2.2.1配置文件"></a>2.2.1配置文件</h5><p>Sonar的配置文件在<code>/usr/local/sonarqube-5.6.6/conf/sonar.properties</code>下，配置参考内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#访问端口</div><div class="line">sonar.web.port=9002</div><div class="line">#mysql链接地址</div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance&amp;useSSL=false</div><div class="line">#mysql的账号</div><div class="line">sonar.jdbc.username=xxx</div><div class="line">#mysql的密码</div><div class="line">sonar.jdbc.password=xxx</div></pre></td></tr></table></figure>
+<h5 id="2-2-2插件更换"><a href="#2-2-2插件更换" class="headerlink" title="2.2.2插件更换"></a>2.2.2插件更换</h5><p>这里需要说明一下，因为Sonar本身是支持各种开发语言的，但是支持这些语言的前提是需要有对应的语法规则库作为插件提供给Sonar使用，但是发现官方的Objective-C语法库是需要付费的，所有在GitHub找到一些开源的语法库作为第三方库使用。比如<a href="https://github.com/octo-technology/sonar-objective-c" target="_blank" rel="external">sonar-objective-c</a>、<a href="https://github.com/ChenTF/iOS-sonarShell" target="_blank" rel="external">iOS-sonarShell</a>。并且这些库要跟对应的执行文件一并使用才能让Sonar运行成功，然后我发现<code>sonar-objective-c</code>是三年前的版本，支持的规则也不多，所以最后决定使用了<code>[iOS-sonarShell</code>。</p>
+<p>他们所对应的插件(jar包)需要放到Sonar的<code>/usr/local/sonarqube-5.6.6/extensions/plugins</code>目录下才能识别到，同时也需要保留<code>run-sonar_V2.1.sh</code>脚本与<code>sonar-project.properties</code>配置文件。</p>
+<h5 id="2-2-3激活规则"><a href="#2-2-3激活规则" class="headerlink" title="2.2.3激活规则"></a>2.2.3激活规则</h5><p>虽然说插件能识别到，但是还需要在Sonar上激活这些规则才能够使用。步骤：启动Sonar后，我们进入顶部的质量配置，再点击下面的创建按钮，就会有一个弹窗出现，通过选择弹窗第二行内容，就会发现我们所加入的语法库规则，选择成功后点创建就算添加成功了。添加成功后可以到顶部的代码规则页面，在页面左侧能查看到刚新加的语言规则，如下图所示。</p>
+<p><img src="/2018/02/14/JenkinsSonar(Config)/addRule1.png"><br><img src="/2018/02/14/JenkinsSonar(Config)/addRule2.png"></p>
+<h4 id="2-3SonarQube-Scanner"><a href="#2-3SonarQube-Scanner" class="headerlink" title="2.3SonarQube Scanner"></a>2.3SonarQube Scanner</h4><p>配置SonarQube好后，还需要配置具体的信息才能让SonarQube Scanner跑起来。</p>
+<h5 id="2-3-1配置文件"><a href="#2-3-1配置文件" class="headerlink" title="2.3.1配置文件"></a>2.3.1配置文件</h5><p>Sonar的配置文件在<code>/usr/local/sonar-scanner-3.0.3.778-macosx/conf/sonar-scanner.properties</code>下，配置参考内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">#sonar本地地址</div><div class="line">sonar.host.url=http://localhost:9002</div><div class="line">#mysql链接地址</div><div class="line">sonar.jdbc.url=jdbc:mysql://localhost:3306/sonar?useUnicode=true&amp;characterEncoding=utf8&amp;rewriteBatchedStatements=true&amp;useConfigs=maxPerformance</div><div class="line">#mysql的账号</div><div class="line">sonar.jdbc.username=root</div><div class="line">#mysql的密码</div><div class="line">sonar.jdbc.password=Fzs123321</div></pre></td></tr></table></figure>
+<h3 id="3-项目配置"><a href="#3-项目配置" class="headerlink" title="3.项目配置"></a>3.项目配置</h3><p>Sonar配置成功后，还需要将我们的项目应用到它的上面，通过扫描后得出代码质量的结果。现假设我有一个叫A名字的Objective-C项目，方便以下配置所用。</p>
+<h4 id="3-1配置脚本"><a href="#3-1配置脚本" class="headerlink" title="3.1配置脚本"></a>3.1配置脚本</h4><p>将步骤2.2.2中保留下来的<code>run-sonar_V2.1.sh</code>与<code>sonar-project.properties</code>的文件复制一份到A项目的目录下，并修改<code>sonar-project.properties</code>的内容如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">#项目键</div><div class="line">sonar.projectKey=A</div><div class="line">#项目名</div><div class="line">sonar.projectName=A</div><div class="line">#项目号</div><div class="line">sonar.projectVersion=1.0.0</div><div class="line">#项目语言</div><div class="line">sonar.language=objectivec</div><div class="line"></div><div class="line">#工程文件目录</div><div class="line">sonar.sources=A</div><div class="line"></div><div class="line">#工程名称（二选一）</div><div class="line">#sonar.objectivec.project=A.xcodeproj </div><div class="line">sonar.objectivec.workspace=A.xcworkspace</div><div class="line"></div><div class="line">#项目主题</div><div class="line">sonar.objectivec.appScheme=A</div><div class="line"></div><div class="line">#开启代码管理</div><div class="line">sonar.scm.enabled=true</div><div class="line">#代码库地址</div><div class="line">sonar.scm.url=scm:xxxxxx</div></pre></td></tr></table></figure>
+<h3 id="4-Jenkins配置"><a href="#4-Jenkins配置" class="headerlink" title="4.Jenkins配置"></a>4.Jenkins配置</h3><p>项目配置成功后，还需要到Jenkins对应项目下的构建操作中添加一个新的构建步骤，叫<code>Execute shell</code>。在Command栏目中加入我们需要执行的命令，命令参考如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">#进去到项目工程目录</div><div class="line">cd $&#123;WORKSPACE&#125;</div><div class="line">#执行sonar扫描脚本</div><div class="line">sh run-sonar_V2.1.sh</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -477,8 +458,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/07/16/JenkinsPlugins/" rel="next" title="JenkinsPlugins">
-                <i class="fa fa-chevron-left"></i> JenkinsPlugins
+              <a href="/2017/09/16/JenkinsSonar(Setup)/" rel="next" title="JenkinsSonar-安装">
+                <i class="fa fa-chevron-left"></i> JenkinsSonar-安装
               </a>
             
           </div>
@@ -518,7 +499,7 @@
 <script>
   var gitment = new Gitment({
     // 根据文章标题设置唯一评论id
-    id: 'JenkinsSonar-Install',
+    id: 'JenkinsSonar-Config',
     owner: 'but819',
     repo: 'but819.github.io',
     oauth: {
@@ -572,7 +553,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-count">7</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -649,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-JDK"><span class="nav-text">2.JDK</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-HomeBrew"><span class="nav-text">3.HomeBrew</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1安装"><span class="nav-text">3.1安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2安装问题"><span class="nav-text">3.2安装问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-xctool"><span class="nav-text">4.xctool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-OCLint"><span class="nav-text">5.OCLint</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-Gcovr"><span class="nav-text">6.Gcovr</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-SonarQube"><span class="nav-text">7.SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-1安装"><span class="nav-text">7.1安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-SonarQube-Scanner"><span class="nav-text">8.SonarQube Scanner</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#8-1安装"><span class="nav-text">8.1安装</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-Mysql"><span class="nav-text">9.Mysql</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#9-1下载"><span class="nav-text">9.1下载</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-2安装"><span class="nav-text">9.2安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-3信息保留"><span class="nav-text">9.3信息保留</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-4启动"><span class="nav-text">9.4启动</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-5创建连接"><span class="nav-text">9.5创建连接</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-6可视化"><span class="nav-text">9.6可视化</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-预告"><span class="nav-text">10.预告</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-配置软件"><span class="nav-text">2.配置软件</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1Mysql"><span class="nav-text">2.1Mysql</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2SonarQube"><span class="nav-text">2.2SonarQube</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1配置文件"><span class="nav-text">2.2.1配置文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2插件更换"><span class="nav-text">2.2.2插件更换</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3激活规则"><span class="nav-text">2.2.3激活规则</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3SonarQube-Scanner"><span class="nav-text">2.3SonarQube Scanner</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-1配置文件"><span class="nav-text">2.3.1配置文件</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-项目配置"><span class="nav-text">3.项目配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1配置脚本"><span class="nav-text">3.1配置脚本</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-Jenkins配置"><span class="nav-text">4.Jenkins配置</span></a></li></ol></div>
             
 
           </div>
