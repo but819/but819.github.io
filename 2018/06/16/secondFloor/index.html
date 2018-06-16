@@ -1,0 +1,970 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="首页下拉二楼展示前言前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。 为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="首页下拉二楼展示">
+<meta property="og:url" content="http://yoursite.com/2018/06/16/secondFloor/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="首页下拉二楼展示前言前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。 为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。">
+<meta property="og:image" content="http://yoursite.com/2018/06/16/secondFloor/secondFloorDetail.png">
+<meta property="og:updated_time" content="2018-06-16T02:55:30.380Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="首页下拉二楼展示">
+<meta name="twitter:description" content="首页下拉二楼展示前言前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。 为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。">
+<meta name="twitter:image" content="http://yoursite.com/2018/06/16/secondFloor/secondFloorDetail.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2018/06/16/secondFloor/"/>
+
+
+
+
+
+  <title>首页下拉二楼展示 | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/16/secondFloor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">首页下拉二楼展示</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-16T10:47:00+08:00">
+                2018-06-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/06/16/secondFloor/" class="leancloud_visitors" data-flag-title="首页下拉二楼展示">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="首页下拉二楼展示"><a href="#首页下拉二楼展示" class="headerlink" title="首页下拉二楼展示"></a>首页下拉二楼展示</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。</p>
+<p>为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。</p>
+<p><img src="/2018/06/16/secondFloor/secondFloorDetail.png"></p>
+<a id="more"></a>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>通常首页都是用一个TableView，然后TableView的backgroundView已被设置背景图片，用作TableView下拉时背后空白的填充。然后对于二楼广告与TableView背景图，两者是对立的，只能显示其中一个。并且两者大小不一样，所以最后选择在TableView下面嵌入一个View用作二楼广告显示。</p>
+<h2 id="需求"><a href="#需求" class="headerlink" title="需求"></a>需求</h2><p>二楼广告的图有可能是图片也有可能是Gif动画，需要考虑下载与播放的问题，然后整体流程是首页下拉后，可以看到二楼广告。然后到一定距离后会出现进入二楼的提示，并且二楼图片与背景分割之间需要一些渐变消失效果，使得二楼图片与背景更好的融合。当用户放手后就会开始进入二楼，流程如下：先将TableView所滑动后的可视内容滑到底部并消失，再将tabBar渐变消失，最后用自定义转场动画，淡化出现二楼对应跳转页面。</p>
+<h2 id="实现方案"><a href="#实现方案" class="headerlink" title="实现方案"></a>实现方案</h2><h3 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h3><p>首先，我们需要一个容器装载二楼图片与进入二楼提示内容，再将容器嵌入到TableView之下。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">//背景图</div><div class="line">UIView *root = [[UIView alloc] init];</div><div class="line">root.frame = CGRectMake(0, 0, TScreenWidth, TScreenHeight);</div><div class="line">root.backgroundColor = [UIColor whiteColor];    </div><div class="line">[self.view insertSubview:root belowSubview:self.tableView];</div></pre></td></tr></table></figure>
+<h3 id="图片下载显示"><a href="#图片下载显示" class="headerlink" title="图片下载显示"></a>图片下载显示</h3><p>图片显示使用<code>SDWebImage/GIF</code>分支的<code>FLAnimatedImageView</code>控件，而图片下载则使用<code>SDWebImageDownloader</code>工具。</p>
+<blockquote>
+<p>Podfile内容</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">pod &apos;SDWebImage&apos;, &apos;~&gt; 4.0&apos;</div><div class="line">pod &apos;SDWebImage/GIF&apos;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>参考代码</p>
+</blockquote>
+<p>思路：先创建好<code>FLAnimatedImageView</code>，并用<code>SDWebImageDownloader</code>加载所需图片，在图片加载完成后先保留图片的NSData与UIImage数据，以便重新加载所需。保留后设置<code>FLAnimatedImageView</code>图片，设置后再根据图片大小更改<code>FLAnimatedImageView</code>的大小，接着可以设置遮罩层做渐变效果，最后可以调整进入二楼提示标签位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line">//加入背景图片</div><div class="line">FLAnimatedImageView *bg =[[FLAnimatedImageView alloc] init];</div><div class="line">bg.contentMode=UIViewContentModeScaleAspectFill;</div><div class="line">bg.clipsToBounds = YES;</div><div class="line">    </div><div class="line">SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];</div><div class="line">[downloader downloadImageWithURL:[NSURL URLWithString:urlStr]</div><div class="line">                         options:0</div><div class="line">                        progress:^(NSInteger receivedSize, NSInteger expectedSize, NSURL * _Nullable targetURL) &#123;&#125;</div><div class="line">                       completed:^(UIImage * _Nullable image, NSData * _Nullable data, NSError * _Nullable error, BOOL finished) &#123;</div><div class="line">        </div><div class="line">        //保留数据</div><div class="line">        self.secondFloorImageData = data;</div><div class="line">        self.secondFloorImage = image;</div><div class="line"></div><div class="line">        //设置Gif</div><div class="line">        if ([bgUrlStr containsString:@&quot;gif&quot;]) &#123;</div><div class="line">            FLAnimatedImage *gifImage = [FLAnimatedImage animatedImageWithGIFData:self.secondFloorImageData];</div><div class="line">            bg.animatedImage = gifImage;</div><div class="line">        &#125;</div><div class="line">        //设置图片</div><div class="line">        else&#123;</div><div class="line">            bg.image = image;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        //获取图片宽高</div><div class="line">        CGFloat w = TScreenWidth;</div><div class="line">        CGFloat h = image.size.height*TScreenWidth/image.size.width;</div><div class="line">        </div><div class="line">        //确保图片大小问题</div><div class="line">        if (image.size.width&gt;0 &amp;&amp; image.size.height&gt;0) &#123;</div><div class="line">            </div><div class="line">            //调整二楼图片大小</div><div class="line">            bg.frame = CGRectMake(0, 0, w, h);</div><div class="line">            </div><div class="line">            //加入遮罩</div><div class="line">            [self addMaskWithSize:CGSizeMake(w, h)];</div><div class="line">            </div><div class="line">            //加入滑动提示</div><div class="line">            [self addScrollTirpsToView:root AndSize:CGSizeMake(w, h)];</div><div class="line">        &#125;</div><div class="line">&#125;];</div><div class="line"></div><div class="line">//动画结束</div><div class="line">bg.loopCompletionBlock = ^(NSUInteger loopCountRemaining) &#123;</div><div class="line">    //NSLog(@&quot;播放结束处理&quot;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<h4 id="遮罩层"><a href="#遮罩层" class="headerlink" title="遮罩层"></a>遮罩层</h4><p>遮罩层主要使用的是<code>layer</code>的<code>mask</code>属性，先创建一个渐变图层，再设置渐变颜色，再设置渐变层的开始跟结束位置与<code>Frame</code>，最后设为<code>secondFloorImageView(FLAnimatedImageView)</code>的遮罩。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">//添加渐变效果</div><div class="line">-(void)addMaskWithSize:(CGSize)imageSize&#123;</div><div class="line">    </div><div class="line">    CGFloat w = TScreenWidth;</div><div class="line">    CGFloat h = image.size.height*TScreenWidth/image.size.width;</div><div class="line">    </div><div class="line">    //加入渐变层</div><div class="line">    CAGradientLayer *gradientLayer = [CAGradientLayer layer];</div><div class="line">    gradientLayer.colors = @[(__bridge id)[UIColor whiteColor].CGColor,</div><div class="line">                             (__bridge id)[[UIColor clearColor] colorWithAlphaComponent:0.0f].CGColor];</div><div class="line">    gradientLayer.locations = @[@0.7, @1.0];</div><div class="line">    gradientLayer.frame = CGRectMake(0, 0, imageSize.width, imageSize.height);</div><div class="line">    self.secondFloorImageView.layer.mask = gradientLayer;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="进入二楼提示标签"><a href="#进入二楼提示标签" class="headerlink" title="进入二楼提示标签"></a>进入二楼提示标签</h4><p>进入二楼提示标签只需要单纯调整一下位置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">//加入滑动提示</div><div class="line">-(void)addScrollTirpsToView:(UIView *)view AndSize:(CGSize)imageSize&#123;</div><div class="line">    </div><div class="line">    if (!self.scrollTirps) &#123;</div><div class="line">        self.scrollTirps = [[UILabel alloc] initWithFrame:CGRectMake(0, imageSize.height+10, TScreenWidth, 15)];</div><div class="line">        </div><div class="line">        self.scrollTirps.hidden = YES;</div><div class="line">        self.scrollTirps.font = [UIFont systemFontOfSize:15];</div><div class="line">        self.scrollTirps.text = @&quot;欢迎进入二楼&quot;;</div><div class="line">        self.scrollTirps.textAlignment = NSTextAlignmentCenter;</div><div class="line">        self.scrollTirps.textColor = [UIColor redColor];</div><div class="line">        </div><div class="line">        [view addSubview:self.scrollTirps];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="添加监控滑动更新"><a href="#添加监控滑动更新" class="headerlink" title="添加监控滑动更新"></a>添加监控滑动更新</h3><p>只要在TableView上添加滑动代理，在代理中可以添加对图片播放处理的操作以及对进入二楼提示标签显示隐藏的操作。首先假设我们加载的图片是Gif的话，<code>FLAnimatedImage</code>是会一直循环播放。所以需要做只有当用户触发下拉操作才开始播放，归位时停止播放，至于二楼提示标签显示可以按照自己所喜欢的滑动距离进行显示与隐藏。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">//滑动触发</div><div class="line">- (void)scrollViewDidScroll:(UIScrollView *)scrollView&#123;</div><div class="line"></div><div class="line">    float scrollY = tab.contentOffset.y;</div><div class="line"></div><div class="line">    //gif图片控制</div><div class="line">    if ([urlStr containsString:@&quot;gif&quot;]) &#123;</div><div class="line">        if (scrollY &lt; 0 ) &#123;</div><div class="line">            if (!self.secondFloorImageView.animatedImage) &#123;</div><div class="line">                FLAnimatedImage *image = [FLAnimatedImage animatedImageWithGIFData:self.secondFloorImageData];</div><div class="line">                self.secondFloorImageView.animatedImage = image;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        else&#123;</div><div class="line">            self.secondFloorImageView.animatedImage = nil;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="添加监控滑动判断"><a href="#添加监控滑动判断" class="headerlink" title="添加监控滑动判断"></a>添加监控滑动判断</h3><p>只要在TableView上添加滑动停止代理，再根据自己所要触发的距离判断是否触发二楼动画转场的开始。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">//手指离开回调</div><div class="line">- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset&#123;</div><div class="line">    </div><div class="line">    //TableView截图设置图片</div><div class="line">    </div><div class="line">    //tabBar截图设置图片</div><div class="line">    </div><div class="line">    //执行进入二楼动画</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="二楼消失视图布局"><a href="#二楼消失视图布局" class="headerlink" title="二楼消失视图布局"></a>二楼消失视图布局</h3><p>首先我们需要知道单纯控制TableView与tabBar做动画，不好控制，并且可能会对后续的恢复显示体验不太友好，所以我采用了控件截图并裁剪出新图作为新动画控件的图片，这样就可以脱离原来的TableView与tabBar。</p>
+<h4 id="基础截图功能"><a href="#基础截图功能" class="headerlink" title="基础截图功能"></a>基础截图功能</h4><blockquote>
+<p>注意</p>
+</blockquote>
+<p>需要注意的一点是，传入的<code>rect(CGRect)</code>是需要在原来区域上每个参数都要乘以对应屏幕的缩放比，比如1倍，2倍，3倍。如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">CGFloat scale = [UIScreen mainScreen].scale;</div><div class="line"></div><div class="line">CGRect rect =  CGRectMake(0*scale,</div><div class="line">                          10*scale ,</div><div class="line">                          100*scale,</div><div class="line">                          100*scale);</div></pre></td></tr></table></figure>
+<blockquote>
+<p>函数</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//指定某个视图的某个区域进行截图</div><div class="line">- (UIImage *)snapshotViewImage:(UIView *)view WithRect:(CGRect)rect&#123;</div><div class="line">    </div><div class="line">    //view控件截图</div><div class="line">    CGRect viewRect =  view.frame;</div><div class="line">    UIGraphicsBeginImageContextWithOptions(viewRect.size, YES, 0.0);</div><div class="line">    CGContextRef context = UIGraphicsGetCurrentContext();</div><div class="line">    [view.layer renderInContext:context];</div><div class="line">    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();</div><div class="line">    UIGraphicsEndImageContext();</div><div class="line">    </div><div class="line">    //裁剪指定区域</div><div class="line">    CGImageRef imageRef =image.CGImage;</div><div class="line">    CGImageRef imageRefRect =CGImageCreateWithImageInRect(imageRef, rect);</div><div class="line">    UIImage *sendImage =[[UIImage alloc] initWithCGImage:imageRefRect];</div><div class="line">    </div><div class="line">    return sendImage;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="TableView截图视图准备"><a href="#TableView截图视图准备" class="headerlink" title="TableView截图视图准备"></a>TableView截图视图准备</h4><p>TableView的截图应该这么理解，先基于屏幕截图，然后截取可视的TableView部分，x该为0，y该为用户滑动的距离（由于用户下拉，所以移动距离需要绝对值），w（宽度）是屏幕宽度，h（高度）则是屏幕高度减去用户滑动距离再减去tabBar的高度，可能大家会问状态栏跟导航栏的高度尼，其实首页的TableView是基于屏幕零点开始的，所以不需要减去状态栏跟导航栏的高度。再根据截图视图是否有被添加进行判断（视图添加在tabBar上），最后设置图片并更新位置即可。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//获取tableview截图</div><div class="line">-(void)getTableViewSnapshot:(float)scrollY&#123;</div><div class="line">    </div><div class="line">    scrollY = -scrollY;</div><div class="line"></div><div class="line">    CGRect rect =  CGRectMake(0,</div><div class="line">                              (scrollY)*scale ,</div><div class="line">                              TScreenWidth*scale,</div><div class="line">                              (TScreenHeight-scrollY-tabBarH)*scale);</div><div class="line">    </div><div class="line">    UIImage * tableViewShot = [self snapshotViewImage:self.tabBar.view WithRect:rect];</div><div class="line">    </div><div class="line">    if (!self.tableSnapshotView) &#123;</div><div class="line">        self.tableSnapshotView = [[UIImageView alloc] initWithFrame:CGRectMake(0, (scrollY) , TScreenWidth, (TScreenHeight-scrollY-tabBarH))];</div><div class="line">        self.tableSnapshotView.contentMode =  UIViewContentModeScaleAspectFit;</div><div class="line">        self.tableSnapshotView.backgroundColor = [UIColor whiteColor];</div><div class="line">        [self.tabBar.view addSubview:self.tableSnapshotView];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    self.tableSnapshotView.frame = CGRectMake(0, (scrollY) , TScreenWidth, (TScreenHeight-scrollY-tabBarH));</div><div class="line">    self.tableSnapshotView.image = tableShot;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="tabBar截图视图准备"><a href="#tabBar截图视图准备" class="headerlink" title="tabBar截图视图准备"></a>tabBar截图视图准备</h4><p>tabBar截图跟tableview截图差不多，tabBar位置基本是相对固定的，可能因为是否为iPhone X需要更改一下位置与高度。同样也是再根据截图视图是否有被添加进行判断（视图添加在tabBar上），最后设置图片并更新位置即可，就不上类似的代码了。</p>
+<h3 id="视图隐藏与出现"><a href="#视图隐藏与出现" class="headerlink" title="视图隐藏与出现"></a>视图隐藏与出现</h3><p>在执行动画前与后都需要重新控制不同视图的显示与隐藏，比如执行前，需要把原来的tabBar、TableView与导航栏隐藏，需要把tabBar与TableView截图控件显示出来。执行后则需要把原来的tabBar、TableView与导航栏显示出出来，但是则需要把tabBar与TableView截图控件从父级移除并置空。比较简单的代码就不上了。</p>
+<h3 id="TableView消失动画"><a href="#TableView消失动画" class="headerlink" title="TableView消失动画"></a>TableView消失动画</h3><p>整个动画包括消失动画是位移+透明组合动画，所以使用<code>CAAnimationGroup</code>完成，位移距离就是TableView截图高度加上tabBar高度。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line">-(void)animationWithTableViewSnapshot&#123;</div><div class="line">    </div><div class="line">    if (self.tableSnapshotView &amp;&amp; self.tableSnapshotView.image) &#123;</div><div class="line">                </div><div class="line">        //位移动画</div><div class="line">        CABasicAnimation *anima1 = [CABasicAnimation animationWithKeyPath:@&quot;position&quot;];</div><div class="line">        CGPoint origins = self.tableSnapshotView.layer.position;</div><div class="line">        anima1.fromValue = [NSValue valueWithCGPoint:origins];</div><div class="line">        anima1.toValue =    [NSValue valueWithCGPoint:CGPointMake(origins.x, origins.y+self.tableSnapshotView.frame.size.height+tabBarH)];</div><div class="line">        </div><div class="line">        //透明</div><div class="line">        CABasicAnimation *anima2 = [CABasicAnimation animationWithKeyPath:@&quot;opacity&quot;];</div><div class="line">        anima2.fromValue = [NSNumber numberWithFloat:1.0];</div><div class="line">        anima2.toValue = [NSNumber numberWithFloat:0.0];</div><div class="line">        </div><div class="line">        //组合动画</div><div class="line">        CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];</div><div class="line">        groupAnimation.animations = [NSArray arrayWithObjects:anima1, nil];</div><div class="line">        groupAnimation.duration = 0.25f;</div><div class="line">        groupAnimation.removedOnCompletion = NO;</div><div class="line">        groupAnimation.fillMode = kCAFillModeForwards;</div><div class="line">        groupAnimation.delegate = self;</div><div class="line">        </div><div class="line">        [self.tableSnapshotView.layer addAnimation:groupAnimation forKey:@&quot;tableAnimation&quot;];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注意</p>
+</blockquote>
+<p>因为TableView消失动画与tabBar消失动画是顺序执行的，需要等待TableView消失动画完成后才能执行tabBar消失动画，所以需要监听CAAnimation的代理，所以在下面最后添加了一个键（tableAnimation），这就可以在代理中知道是TableView消失动画即可，监听代码可参考下节。</p>
+<h3 id="tabBar消失动画"><a href="#tabBar消失动画" class="headerlink" title="tabBar消失动画"></a>tabBar消失动画</h3><p>tabBar消失动画只要单纯加入透明动画即可，同样出于需要在tabBar消失动画执行完成后需要发起转场动画，所以也需要监听CAAnimation的代理和加入对应的键（tabBarAnimation）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">-(void)animationWithTabbarSnapshot&#123;</div><div class="line">    </div><div class="line">    if (self.tabBarSnapshotView &amp;&amp; self.tabBarSnapshotView.image) &#123;</div><div class="line">        </div><div class="line">        //透明</div><div class="line">        CABasicAnimation *anima1 = [CABasicAnimation animationWithKeyPath:@&quot;opacity&quot;];</div><div class="line">        anima1.fromValue = [NSNumber numberWithFloat:1.0];</div><div class="line">        anima1.toValue = [NSNumber numberWithFloat:0.0];</div><div class="line">        </div><div class="line">        //组动画</div><div class="line">        CAAnimationGroup *groupAnimation = [CAAnimationGroup animation];</div><div class="line">        groupAnimation.animations = [NSArray arrayWithObjects:anima1, nil];</div><div class="line">        groupAnimation.duration = 0.25f;</div><div class="line">        groupAnimation.removedOnCompletion = NO;</div><div class="line">        groupAnimation.fillMode = kCAFillModeForwards;</div><div class="line">        groupAnimation.delegate = self;</div><div class="line">        </div><div class="line">        [self.tabBarSnapshotView.layer addAnimation:groupAnimation forKey:@&quot;tabBarAnimation&quot;];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="动画执行完成监听操作"><a href="#动画执行完成监听操作" class="headerlink" title="动画执行完成监听操作"></a>动画执行完成监听操作</h3><p>结合两个动画上述动画的讲解，代码如下。但需要补充一点就是发起转场操作的同时需要在转场完成后执行上文中<code>视图隐藏与出现</code>的操作，所以加了一个延时的操作，将界面恢复原貌。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag&#123;</div><div class="line"></div><div class="line">    if (flag) &#123;</div><div class="line">        if (anim == [self.tableSnapshotView.layer animationForKey:@&quot;tableAnimation&quot;]) &#123;</div><div class="line">            //执行tabBar消失动画</div><div class="line">            [self animationWithTabbarSnapshot];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    if (flag) &#123;</div><div class="line">        if (anim == [self.tabBarSnapshotView.layer animationForKey:@&quot;tabBarAnimation&quot;]) &#123;</div><div class="line">            //进入二楼（push操作）</div><div class="line">           ... </div><div class="line"></div><div class="line">            //消失处理（因为转场动画执行时间是1.0s）</div><div class="line">            [self performSelector:@selector(视图隐藏与出现函数:)</div><div class="line">                       withObject:nil</div><div class="line">                       afterDelay:1.0f];</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="自定义转场"><a href="#自定义转场" class="headerlink" title="自定义转场"></a>自定义转场</h3><p>这个自定义转场只是单纯的做了简单的淡出效果，没有做返回的效果，大概的讲解一下使用流程。</p>
+<ul>
+<li>监听导航栏代理（UINavigationControllerDelegate）</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    self.navigationController.delegate = self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>实现监听函数</li>
+</ul>
+<p>监听代理需要注意的是要区分是否是进入二楼的控制器并且是Push操作，具体判断可根据自己添加条件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">- (nullable id &lt;UIViewControllerAnimatedTransitioning&gt;)navigationController:(UINavigationController *)navigationController</div><div class="line">                                            animationControllerForOperation:(UINavigationControllerOperation)operation</div><div class="line">                                                         fromViewController:(UIViewController *)fromVC</div><div class="line">                                                           toViewController:(UIViewController *)toVC&#123;</div><div class="line">    //区分操作</div><div class="line">    if (operation == UINavigationControllerOperationPush) &#123;</div><div class="line">        TestMoveTransion *move = [[TestMoveTransion alloc] init];</div><div class="line">        return move;</div><div class="line">    &#125;    </div><div class="line">    return nil;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>实现自定义转场文件</li>
+</ul>
+<p>创建一个文件继承自 NSObject, 并遵守 UIViewControllerAnimatedTransitioning协议，暂且叫<code>TestMoveTransion</code>。以下是需要实现的方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//执行时间</div><div class="line">- (NSTimeInterval)transitionDuration:(nullable id&lt;UIViewControllerContextTransitioning&gt;)transitionContext&#123;</div><div class="line">    return 1.0f;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//执行内容</div><div class="line">- (void)animateTransition:(nonnull id&lt;UIViewControllerContextTransitioning&gt;)transitionContext &#123;</div><div class="line"></div><div class="line">    UIViewController *toVC   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];</div><div class="line">    UIView *containerView = [transitionContext containerView];</div><div class="line">    </div><div class="line">    toVC.view.frame = [transitionContext finalFrameForViewController:toVC];</div><div class="line">    toVC.view.alpha = 0;</div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line">    </div><div class="line">    //单纯的执行淡化动画操作，最后一定要执行[transitionContext completeTransition:YES];代表结束</div><div class="line">    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^&#123;</div><div class="line">        toVC.view.alpha = 1;</div><div class="line">    &#125; completion:^(BOOL finished) &#123;</div><div class="line">        [transitionContext completeTransition:YES];</div><div class="line">    &#125;];    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/14/JenkinsSonar(Config)/" rel="next" title="JenkinsSonar-配置">
+                <i class="fa fa-chevron-left"></i> JenkinsSonar-配置
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'secondFloor',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#首页下拉二楼展示"><span class="nav-text">首页下拉二楼展示</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#背景"><span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#需求"><span class="nav-text">需求</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现方案"><span class="nav-text">实现方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建视图"><span class="nav-text">创建视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#图片下载显示"><span class="nav-text">图片下载显示</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#遮罩层"><span class="nav-text">遮罩层</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入二楼提示标签"><span class="nav-text">进入二楼提示标签</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加监控滑动更新"><span class="nav-text">添加监控滑动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#添加监控滑动判断"><span class="nav-text">添加监控滑动判断</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二楼消失视图布局"><span class="nav-text">二楼消失视图布局</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础截图功能"><span class="nav-text">基础截图功能</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TableView截图视图准备"><span class="nav-text">TableView截图视图准备</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tabBar截图视图准备"><span class="nav-text">tabBar截图视图准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#视图隐藏与出现"><span class="nav-text">视图隐藏与出现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TableView消失动画"><span class="nav-text">TableView消失动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#tabBar消失动画"><span class="nav-text">tabBar消失动画</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#动画执行完成监听操作"><span class="nav-text">动画执行完成监听操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义转场"><span class="nav-text">自定义转场</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
