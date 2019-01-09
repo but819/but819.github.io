@@ -1,0 +1,1144 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言UIStackView是Apple在iOS9推出的轻量控件，但一直没尝试使用，页面布局还是停留在UITableView与UICollectionView。虽然这两个控件可以满足大部分界面，但是对于复杂的界面，所带来的约束也会变多变复杂。所以针对这种场景，UIStackView应运而生。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIStackView入门">
+<meta property="og:url" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="1.前言UIStackView是Apple在iOS9推出的轻量控件，但一直没尝试使用，页面布局还是停留在UITableView与UICollectionView。虽然这两个控件可以满足大部分界面，但是对于复杂的界面，所带来的约束也会变多变复杂。所以针对这种场景，UIStackView应运而生。">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/Spacing.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/Axis1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/Axis2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionFill1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionFill2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionFill3.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionFillEqually.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionFillProportionally.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing3.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering3.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering4.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentTop.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentLeading.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentCenter1.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentCenter2.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentBottom.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentTrailling.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentFirstBaseLine.png">
+<meta property="og:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/AlignmentLastBaseLine.png">
+<meta property="og:updated_time" content="2019-01-09T03:30:47.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UIStackView入门">
+<meta name="twitter:description" content="1.前言UIStackView是Apple在iOS9推出的轻量控件，但一直没尝试使用，页面布局还是停留在UITableView与UICollectionView。虽然这两个控件可以满足大部分界面，但是对于复杂的界面，所带来的约束也会变多变复杂。所以针对这种场景，UIStackView应运而生。">
+<meta name="twitter:image" content="http://yoursite.com/2019/01/09/UIStackViewIntroduction/Spacing.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/01/09/UIStackViewIntroduction/"/>
+
+
+
+
+
+  <title>UIStackView入门 | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/09/UIStackViewIntroduction/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UIStackView入门</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-09T11:16:00+08:00">
+                2019-01-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/09/UIStackViewIntroduction/" class="leancloud_visitors" data-flag-title="UIStackView入门">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>UIStackView是Apple在iOS9推出的轻量控件，但一直没尝试使用，页面布局还是停留在UITableView与UICollectionView。虽然这两个控件可以满足大部分界面，但是对于复杂的界面，所带来的约束也会变多变复杂。所以针对这种场景，UIStackView应运而生。</p>
+<a id="more"></a>
+<h3 id="2-知识背景"><a href="#2-知识背景" class="headerlink" title="2.知识背景"></a>2.知识背景</h3><p>熟悉AutoLayout的同学会了解以下两个属性，由于UIStackView会受这两个属性影响整体布局，所以建议不熟悉的可以先温故。</p>
+<ul>
+<li>Content Hugging Priority<ul>
+<li>内容抗拉伸优先级，数字越大抗拉伸能力越强。</li>
+</ul>
+</li>
+<li>Content Compression Resistance Priority<ul>
+<li>内容抗压缩优先级，数字越大抗压缩能力越强。</li>
+</ul>
+</li>
+</ul>
+<h3 id="3-基础属性"><a href="#3-基础属性" class="headerlink" title="3.基础属性"></a>3.基础属性</h3><p>UIStackView 有几个重要的属性来控制整体布局，有点像前端的Flex布局。</p>
+<h4 id="3-0-UIStackView布局"><a href="#3-0-UIStackView布局" class="headerlink" title="3.0 UIStackView布局"></a>3.0 UIStackView布局</h4><p>以下文章所描述的UIStackView是基于以下布局所建立的，里面所包含的是四个Label。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Top:0,Tralling:0,Height:100,Leading:0</div></pre></td></tr></table></figure>
+<h4 id="3-1-Spacing"><a href="#3-1-Spacing" class="headerlink" title="3.1 Spacing"></a>3.1 Spacing</h4><p>控制控件内元素之间间隔的大小</p>
+<p><img src="/2019/01/09/UIStackViewIntroduction/Spacing.png"></p>
+<h4 id="3-2-Axis"><a href="#3-2-Axis" class="headerlink" title="3.2 Axis"></a>3.2 Axis</h4><p>控制控件所有元素整体排列方向</p>
+<ul>
+<li>Horizontal<ul>
+<li>水平方向（默认）</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2019/01/09/UIStackViewIntroduction/Axis1.png"></p>
+<ul>
+<li>Vertical<ul>
+<li>垂直方向</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2019/01/09/UIStackViewIntroduction/Axis2.png"></p>
+<h4 id="3-3-Distribution"><a href="#3-3-Distribution" class="headerlink" title="3.3 Distribution"></a>3.3 Distribution</h4><p>与<code>Axis</code>平行方向的整体元素排列布局配置属性。</p>
+<h5 id="3-3-1-Fill"><a href="#3-3-1-Fill" class="headerlink" title="3.3.1 Fill"></a>3.3.1 Fill</h5><p>关于设置<code>Fill</code>的效果，对于不同元素的内容大小与优先级属性，会有所区别。</p>
+<ul>
+<li>Fill <ul>
+<li>填充（默认）</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>所有元素属性优先级相同，并且字体内容相同。</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionFill1.png"></p>
+<p>现象：系统布局并不知道怎么填充，所以会报建议设置不同元素的优先级属性去解决布局问题。</p>
+<blockquote>
+<p>所有元素属性优先级相同，但字体内容不相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试、测试测试测试、测试测试、测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionFill2.png"></p>
+<p>现象：全部标签在一个屏幕下不能将内容全部展示的时候，会有标签被压缩掉，但是对于四个标签，优先级属性是一样的。</p>
+<p>结论：从图片可以看出，在相同优先级下，<code>Fill</code>布局是先计算出元素固有宽度，然后如果需要压缩，则按照顺序压缩，越排在后面的元素越容易被压缩。</p>
+<blockquote>
+<p>所有元素属性优先级不相同，并且字体内容也不相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试、测试测试测试、测试测试、测试</div></pre></td></tr></table></figure>
+<p>将最后一个标签的抗压缩水平属性调高为<strong>751</strong>，其余三个还是<strong>750</strong>。</p>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionFill3.png"></p>
+<p>现象：可以看到第四个没有被压缩，而是第三个被压缩了。</p>
+<p>结论：从图片可以看出，在不相同优先级下，<code>Fill</code>布局是先计算出元素固有宽度，然后如果需要压缩，再根据不同优先级属性确定哪个元素先不被压缩，然后再往前找到可以压缩的元素，进行压缩。</p>
+<h5 id="3-3-2-Fill-Equally"><a href="#3-3-2-Fill-Equally" class="headerlink" title="3.3.2 Fill Equally"></a>3.3.2 Fill Equally</h5><ul>
+<li>Fill Equally <ul>
+<li>根据UIStackView所拥有的的宽/高进行等分布局</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试、测试测试测试、测试测试、测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionFillEqually.png"></p>
+<p>现象：可以看到四个标签所有拥有的宽度都是相等的，。</p>
+<p>结论：从图片可以看出，设置Fill Equally后，布局与元素的内容大小、优先级属性没有任何关联。</p>
+<h5 id="3-3-3-Fill-Proportionally"><a href="#3-3-3-Fill-Proportionally" class="headerlink" title="3.3.3 Fill Proportionally"></a>3.3.3 Fill Proportionally</h5><ul>
+<li>Fill Proportionally<ul>
+<li>根据元素内容所占比例进行布局</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试、测试测试测试、测试测试、测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionFillProportionally.png"></p>
+<p>现象：可以看到四个标签所拥有的宽度是按照内容大小进行分割的。</p>
+<p>结论：从图片可以看出，设置Fill Proportionally后，布局只与元素内容大小有关联，与优先级属性没有关联。</p>
+<h5 id="3-3-4-Equal-Spacing"><a href="#3-3-4-Equal-Spacing" class="headerlink" title="3.3.4 Equal Spacing"></a>3.3.4 Equal Spacing</h5><ul>
+<li>Equal Spacing<ul>
+<li>根据所有元素间隔相等方式布局</li>
+</ul>
+</li>
+</ul>
+<p>结论：设置Equal Spacing与设置Fill差不多，布局先计算出元素固有宽度，并算出大于或等于控件原本设置间隔的相同间隔，然后如果需要压缩，再根据不同优先级属性确定哪个元素先不被压缩，然后再往前找可以压缩的元素进行压缩。具体可以参考以下测试。</p>
+<p>以下测试UIStackView Spacing设置为2。</p>
+<blockquote>
+<p>所有元素属性优先级相同，并且字体内容相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试、测试测试、测试测试、测试测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing1.png"></p>
+<p>现象：可以看到四个元素之间的间隔是相等的。</p>
+<blockquote>
+<p>所有元素属性优先级相同，并且字体内容不相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试、测试测试、测试测试、测试测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing2.png"></p>
+<p>现象：可以看到内容过长后同样也会出现设置<code>Fill</code>一样的的问题，不够显示的话会被压缩。虽然优先级属性一样，但还是选择压缩最后一个元素，然后还会保留控件原本设置<code>Spacing</code>为2的间隔，<code>因为这是最小间隔</code>。</p>
+<blockquote>
+<p>所有元素属性优先级不相同，并且字体内容不相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试、测试测试、测试测试、测试测试</div></pre></td></tr></table></figure>
+<p>将最后一个标签的抗压缩水平属性调高为<strong>751</strong>，其余三个还是<strong>750</strong>。</p>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualSpacing3.png"></p>
+<h5 id="3-3-5-Equal-Centering"><a href="#3-3-5-Equal-Centering" class="headerlink" title="3.3.5 Equal Centering"></a>3.3.5 Equal Centering</h5><ul>
+<li>Equal Centering<ul>
+<li>所有元素中点间的距离相等方式布局</li>
+</ul>
+</li>
+</ul>
+<p>结论：设置Equal Centering与设置Fill差不多，布局先计算出元素固有宽度，然后计算不同元素中心点的间隔。然后如果需要压缩，再根据不同优先级属性确定哪个元素先不被压缩，然后再往前找可以压缩的元素进行压缩。</p>
+<p>但是我发现如果个数太少或者某些元素中心点距离比较极端是不能达到等中心间距的效果，因此如果要使用此方式，则需要考虑兼容情况比较多。具体可以参考以下测试。</p>
+<p>以下测试UIStackView Spacing设置为2。</p>
+<blockquote>
+<p>元素个数比较少，并且字体内容相同。</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering1.png"></p>
+<p>现象：元素中心点距离是一样的</p>
+<blockquote>
+<p>元素个数比较多，并且字体内容相同。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">6个测试测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering2.png"></p>
+<p>现象：通过被压缩方式达到元素中心距离是一样的</p>
+<blockquote>
+<p>元素个数比较少，元素宽度极端。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试测试、测试、测</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering3.png"></p>
+<p>现象：由于个数比较少，并且第一元素宽度算是比较大，导致每两个元素间的中心间距达不到相等的效果。</p>
+<blockquote>
+<p>元素个数比较少，元素宽度极端。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">//标签内容</div><div class="line">测试测试测试测试测试测试测试测试测试测试测试测试、测试、测试测试测试测试测试</div></pre></td></tr></table></figure>
+<p><img src="/2019/01/09/UIStackViewIntroduction/DistributionEqualEqualCentering4.png"></p>
+<p>现象：屏幕不能全展示情况下，虽然达到了全部元素中心间距离相等，但是第二个元素被压缩。</p>
+<h4 id="3-4-Alignment"><a href="#3-4-Alignment" class="headerlink" title="3.4 Alignment"></a>3.4 Alignment</h4><p>与<code>Axis</code>垂直方向的整体元素排列布局配置属性，在<code>Axis</code>的值不同时会有不同的名称。</p>
+<h5 id="3-4-1-Fill"><a href="#3-4-1-Fill" class="headerlink" title="3.4.1 Fill"></a>3.4.1 Fill</h5><ul>
+<li>Fill <ul>
+<li>填充（默认）</li>
+</ul>
+</li>
+</ul>
+<p>与<code>3.2 Axis</code>展现效果一样，则不重复图片。</p>
+<h5 id="3-4-2-Top-Leading"><a href="#3-4-2-Top-Leading" class="headerlink" title="3.4.2 Top/Leading"></a>3.4.2 Top/Leading</h5><ul>
+<li>Top/Leading<ul>
+<li>对应顶部方向对齐</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Horizontal</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentTop.png"></p>
+<p>现象：全部元素顶部对齐。</p>
+<blockquote>
+<p>Vertical</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentLeading.png"></p>
+<p>现象：全部元素向左对齐。</p>
+<h5 id="3-4-3-Center"><a href="#3-4-3-Center" class="headerlink" title="3.4.3 Center"></a>3.4.3 Center</h5><ul>
+<li>Center<ul>
+<li>对应居中方向对齐</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Horizontal</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentCenter1.png"></p>
+<p>现象：全部元素垂直居中对齐。</p>
+<blockquote>
+<p>Vertical</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentCenter2.png"></p>
+<p>现象：全部元素水平居中对齐。</p>
+<h5 id="3-4-4-Bottom-Trailling"><a href="#3-4-4-Bottom-Trailling" class="headerlink" title="3.4.4 Bottom/Trailling"></a>3.4.4 Bottom/Trailling</h5><ul>
+<li>Bottom/Trailling<ul>
+<li>对应底部方向对齐</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Horizontal</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentBottom.png"></p>
+<p>现象：全部元素底部对齐。</p>
+<blockquote>
+<p>Vertical</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentTrailling.png"></p>
+<p>现象：全部元素向右对齐。</p>
+<h5 id="3-4-5-First-BaseLine"><a href="#3-4-5-First-BaseLine" class="headerlink" title="3.4.5 First BaseLine"></a>3.4.5 First BaseLine</h5><ul>
+<li>First BaseLine<ul>
+<li>仅限在Horizontal使用，按照元素首行基线对齐</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Horizontal</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentFirstBaseLine.png"></p>
+<p>现象：在垂直方向上，先确定全部元素首行基线作为起点，再向下确定整体元素布局终点。</p>
+<h5 id="3-4-5-Last-BaseLine"><a href="#3-4-5-Last-BaseLine" class="headerlink" title="3.4.5 Last BaseLine"></a>3.4.5 Last BaseLine</h5><ul>
+<li>Last BaseLine<ul>
+<li>仅限在Horizontal使用，按照元素末行基线对齐</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>Horizontal</p>
+</blockquote>
+<p><img src="/2019/01/09/UIStackViewIntroduction/AlignmentLastBaseLine.png"></p>
+<p>现象：在垂直方向上，先确定全部元素末行基线作为起点，再向上确定整体元素布局终点。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/06/16/secondFloor/" rel="next" title="首页下拉二楼展示">
+                <i class="fa fa-chevron-left"></i> 首页下拉二楼展示
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'UIStackView Introduction',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">9</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-知识背景"><span class="nav-text">2.知识背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-基础属性"><span class="nav-text">3.基础属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#3-0-UIStackView布局"><span class="nav-text">3.0 UIStackView布局</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-1-Spacing"><span class="nav-text">3.1 Spacing</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-2-Axis"><span class="nav-text">3.2 Axis</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-3-Distribution"><span class="nav-text">3.3 Distribution</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-1-Fill"><span class="nav-text">3.3.1 Fill</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-2-Fill-Equally"><span class="nav-text">3.3.2 Fill Equally</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-3-Fill-Proportionally"><span class="nav-text">3.3.3 Fill Proportionally</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-4-Equal-Spacing"><span class="nav-text">3.3.4 Equal Spacing</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-3-5-Equal-Centering"><span class="nav-text">3.3.5 Equal Centering</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-4-Alignment"><span class="nav-text">3.4 Alignment</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-1-Fill"><span class="nav-text">3.4.1 Fill</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-2-Top-Leading"><span class="nav-text">3.4.2 Top/Leading</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-3-Center"><span class="nav-text">3.4.3 Center</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-4-Bottom-Trailling"><span class="nav-text">3.4.4 Bottom/Trailling</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-5-First-BaseLine"><span class="nav-text">3.4.5 First BaseLine</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3-4-5-Last-BaseLine"><span class="nav-text">3.4.5 Last BaseLine</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
