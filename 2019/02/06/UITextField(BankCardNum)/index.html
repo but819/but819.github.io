@@ -1,0 +1,977 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="1.前言对于当下很多App来说，业务场景或多或少都会牵涉到银行卡，一般都会有绑定银行卡的场景。输入框普遍都是以四位为一组的格式进行显示，例如1111 1111 1111 1111 111。以下是使用UITextField做的一些尝试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UITextField-银行卡号处理">
+<meta property="og:url" content="http://yoursite.com/2019/02/06/UITextField(BankCardNum)/index.html">
+<meta property="og:site_name" content="b_ut">
+<meta property="og:description" content="1.前言对于当下很多App来说，业务场景或多或少都会牵涉到银行卡，一般都会有绑定银行卡的场景。输入框普遍都是以四位为一组的格式进行显示，例如1111 1111 1111 1111 111。以下是使用UITextField做的一些尝试。">
+<meta property="og:updated_time" content="2019-02-05T17:12:26.046Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="UITextField-银行卡号处理">
+<meta name="twitter:description" content="1.前言对于当下很多App来说，业务场景或多或少都会牵涉到银行卡，一般都会有绑定银行卡的场景。输入框普遍都是以四位为一组的格式进行显示，例如1111 1111 1111 1111 111。以下是使用UITextField做的一些尝试。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/02/06/UITextField(BankCardNum)/"/>
+
+
+
+
+
+  <title>UITextField-银行卡号处理 | b_ut</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?92ce15853b3d0e78fbe40809d50c544a";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">b_ut</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            文章
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-production">
+          <a href="/production/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-product-hunt"></i> <br />
+            
+            作品
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/06/UITextField(BankCardNum)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="b_ut">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="b_ut">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">UITextField-银行卡号处理</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-02-06T01:08:00+08:00">
+                2019-02-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/iOS/" itemprop="url" rel="index">
+                    <span itemprop="name">iOS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/02/06/UITextField(BankCardNum)/" class="leancloud_visitors" data-flag-title="UITextField-银行卡号处理">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-前言"><a href="#1-前言" class="headerlink" title="1.前言"></a>1.前言</h3><p>对于当下很多App来说，业务场景或多或少都会牵涉到银行卡，一般都会有绑定银行卡的场景。输入框普遍都是以四位为一组的格式进行显示，例如<code>1111 1111 1111 1111 111</code>。以下是使用<code>UITextField</code>做的一些尝试。</p>
+<a id="more"></a>
+<h3 id="2-解决思路"><a href="#2-解决思路" class="headerlink" title="2.解决思路"></a>2.解决思路</h3><h4 id="2-1-设置UITextField代理"><a href="#2-1-设置UITextField代理" class="headerlink" title="2.1 设置UITextField代理"></a>2.1 设置UITextField代理</h4><p>我们需要知道用户每次输入的情况，首先就需要监听<code>UITextField</code>的代理<code>UITextFieldDelegate</code>方法。</p>
+<p>首先设置<code>UITextField</code>代理</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">self.bankCardInput.delegate = self;</div></pre></td></tr></table></figure>
+<p>其次再监听输入变化代理方法。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string &#123; </div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>代理方法说明。</p>
+<ul>
+<li>textField<ul>
+<li>输入控件</li>
+</ul>
+</li>
+<li>range<ul>
+<li>输入框内要被替换的文字起点与文字长度</li>
+</ul>
+</li>
+<li>string<ul>
+<li>用户将要输入的内容</li>
+</ul>
+</li>
+<li>return<ul>
+<li>YES:接收用户输入内容</li>
+<li>NO:忽略用户输入内容</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-2-控制用户输入类型"><a href="#2-2-控制用户输入类型" class="headerlink" title="2.2 控制用户输入类型"></a>2.2 控制用户输入类型</h4><p>银行卡输入框键盘一般都是以数字键盘<code>UIKeyboardTypeNumberPad(UIKeyboardType)</code>为主，或者有特殊要求的是其他类型。</p>
+<p>不管输入键盘的类型，对于实际情况银行卡的输入，只能接收数字，所以我们必须要做一个非法字符过滤的逻辑，控制输入字符只能是数字，如果不是则不进行操作并且忽略用户输入。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//可接收字符串类型，\b是删除符的意思</div><div class="line">NSCharacterSet *canInputSet = [NSCharacterSet characterSetWithCharactersInString:@&quot;0123456789\b&quot;];</div><div class="line"></div><div class="line">//确保输入内容有效</div><div class="line">if ([string rangeOfCharacterFromSet:[canInputSet invertedSet]].location != NSNotFound) &#123;</div><div class="line">    return NO;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-3-处理用户输入后的内容"><a href="#2-3-处理用户输入后的内容" class="headerlink" title="2.3 处理用户输入后的内容"></a>2.3 处理用户输入后的内容</h4><p>确认用户输入内容合法之后，则需要提取用户输入后的内容。通过入参的<code>range</code>来获取用户最后输入后的字符串。</p>
+<p>由于我们每4位数字的间隔是通过<strong>追加空格符</strong>来是实现的。所以我们处理最后的字符前，需要去除所有空格才是用户修改后真正的银行卡号。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">//原本的数据</div><div class="line">NSString *baseStr = textField.text;</div><div class="line">    </div><div class="line">//操作后的数据</div><div class="line">NSString *replaceStr = [baseStr stringByReplacingCharactersInRange:range withString:string];</div><div class="line"></div><div class="line">//重新格式化数字</div><div class="line">NSString *lastStr = [self getFormatBankCardNum:bankCardStr];</div></pre></td></tr></table></figure>
+<p>去除空格函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">+(NSString *)getBankCardNumFromFormatStr:(NSString *)baseStr&#123;</div><div class="line">    baseStr = [baseStr stringByReplacingOccurrencesOfString:@&quot; &quot; withString:@&quot;&quot;];</div><div class="line">    return baseStr;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-4-重新格式化修改后的银行卡号"><a href="#2-4-重新格式化修改后的银行卡号" class="headerlink" title="2.4 重新格式化修改后的银行卡号"></a>2.4 重新格式化修改后的银行卡号</h4><p>拿到最后的银行卡后，就可以用作重新格式化的字符串。整个流程是：</p>
+<p>通过字符串截取方式生成新的格式化字符，具体是以4位作为一组进行截取，如果少于4位则通过可用字符串长度进行截取，直到整个字符串截取完毕。</p>
+<p>在截取过程，如果截取位数为4位则在新字符串后追加一个空格。</p>
+<p>得出最后结果后，还需要通过去除新的格式化字符串<strong>前后</strong>不需要的内容（数字以外的内容）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">//按照四位为一组的形式格式化银行卡号</div><div class="line">+(NSString *)getFormatBankCardNum:(NSString *)bankCardNum&#123;</div><div class="line">   </div><div class="line">    NSString *result = @&quot;&quot;;</div><div class="line">   </div><div class="line">    while (bankCardNum.length &gt; 0) &#123;</div><div class="line">        </div><div class="line">        //提取可用字符</div><div class="line">        NSString *sub = [bankCardNum substringToIndex:MIN(bankCardNum.length, 4)];</div><div class="line">        </div><div class="line">        //追加字符</div><div class="line">        result = [result stringByAppendingString:sub];</div><div class="line">        </div><div class="line">        //如果是4位则在后面追加空格</div><div class="line">        if (sub.length == 4) &#123;</div><div class="line">            result = [result stringByAppendingString:@&quot; &quot;];</div><div class="line">        &#125;</div><div class="line">        //提取后面元素，作为要处理字符</div><div class="line">        bankCardNum = [bankCardNum substringFromIndex:MIN(bankCardNum.length, 4)];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //去除不需要字符</div><div class="line">    NSCharacterSet *canInputSet = [NSCharacterSet characterSetWithCharactersInString:@&quot;0123456789\b&quot;];</div><div class="line"></div><div class="line">    result = [result stringByTrimmingCharactersInSet:[canInputSet invertedSet]];</div><div class="line"></div><div class="line">    return result;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="2-5-光标处理"><a href="#2-5-光标处理" class="headerlink" title="2.5 光标处理"></a>2.5 光标处理</h4><p>设置了新字符到<code>UITextField</code>后，由于用户新编辑导致，可能会导致光标会错乱，所以需要重新调整光标位置。</p>
+<p>先提取原来输入框内光标右侧的字符，去除空格后，得出纯数字，用作计算光标右边有效字符所用。</p>
+<p>再计算新字符对应光标位置，用<strong>2.3</strong>中最后修改的银行卡号算出整个卡号数字该有的空格数，再通过减去光标右边有效字符数计算得出光标左边该有的空格数，将两个空格数相减就是光标右边该有的空格数。</p>
+<p>再加上原本光标右侧的有效数字，就是新字符光标从右往左，光标移动步数。</p>
+<p>这么说可能有点复杂，举个例子一步一步说明会比较好理解，我们就举用户在中间输入的例子来说。</p>
+<p>用户已经输入内容如下，光标在最后</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1234 1234 1|</div></pre></td></tr></table></figure>
+<p>用户将要在第二个1后输入内容，光标如下，而将要输入内容是7890。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1234 1|234 1</div></pre></td></tr></table></figure>
+<p>输入后的最新光标应该在7890的0后面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">1234 1789 0|234 1</div></pre></td></tr></table></figure>
+<p>处理数据逻辑流程</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">原本内容：1234 1234 1</div><div class="line">格式化后：123412341</div><div class="line"></div><div class="line">原光标右：234 1</div><div class="line">格式化后：2341</div><div class="line"></div><div class="line">插入内容：1234 1789 0234 1</div><div class="line">格式化后：1234178902341</div><div class="line">总空格数：3个</div><div class="line"></div><div class="line">除去右边：123417890</div><div class="line">应有格数：2个</div><div class="line"></div><div class="line">右边字数：2341-&gt;4个</div><div class="line">右边格数：3-2=1</div><div class="line">右边光标：从右往左移动4+1个单位</div></pre></td></tr></table></figure>
+<p>关键逻辑代码如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">//计算不带空格的卡号按照四位为一组得出可分割组数</div><div class="line">+(NSInteger)getGroupCount:(NSInteger)length&#123;</div><div class="line">    return (NSInteger)ceilf((CGFloat)length /4);</div><div class="line">&#125;</div><div class="line"></div><div class="line">//获取新字符光标右边字符数长度</div><div class="line">//右边总字符数=原右边字符串长度+右边应有空格数</div><div class="line">//右边应有空格数=总字符应有空格-光标左边剩余字符空格</div><div class="line">+(NSInteger)getCursorRightStrLengthWithBankCardNumLength:(NSInteger)toTalLength AndRightNumCount:(NSInteger)rightNumCount&#123;</div><div class="line">    </div><div class="line">    //所有空格数</div><div class="line">    NSInteger totalGroupCount = [self getGroupCount:toTalLength];</div><div class="line">    </div><div class="line">    //原光标左边空格数</div><div class="line">    NSInteger leftGroupCount = [self getGroupCount:toTalLength - rightNumCount];</div><div class="line">    </div><div class="line">    //调节</div><div class="line">    NSInteger totalSpaces = 0;</div><div class="line">    if (totalGroupCount -1 &gt; 0) &#123;</div><div class="line">        totalSpaces = totalGroupCount -1;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //调节</div><div class="line">    NSInteger leftSpaces = 0;</div><div class="line">    if (leftGroupCount -1 &gt; 0) &#123;</div><div class="line">        leftSpaces = leftGroupCount -1;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    //右边总字符数+右边总空格数</div><div class="line">    return rightNumCount + (totalSpaces - leftSpaces);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h4 id="2-6-设置光标"><a href="#2-6-设置光标" class="headerlink" title="2.6 设置光标"></a>2.6 设置光标</h4><p>在<strong>2.5</strong>获取光标位置后，还需要设置到<code>UITextField</code>中，由于<code>UITextField</code>没有直接设置光标位置的函数，但可以通过<code>setSelectedTextRange</code>设置选择位置。其实此方法是设置选择一段文字的方法，但是可以通过设置选取字符长度为0即可达到移动光标的效果。因此封装了一个方法，方便直接通过<code>NSRange</code>设置<code>UITextField</code>光标。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//通过NSRange设置setSelectedTextRange</div><div class="line">- (void)setSelectedRange:(NSRange)range&#123;</div><div class="line">    </div><div class="line">    UITextPosition *beginning = self.beginningOfDocument;</div><div class="line">    </div><div class="line">    UITextPosition *startPosition = [self positionFromPosition:beginning offset:range.location];</div><div class="line">    </div><div class="line">    UITextPosition *endPosition = [self positionFromPosition:beginning offset:NSMaxRange(range)];</div><div class="line">    </div><div class="line">    UITextRange *selectionRange = [self textRangeFromPosition:startPosition toPosition:endPosition];</div><div class="line">    </div><div class="line">    [self setSelectedTextRange:selectionRange];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有了封装方法后，就到了真正设置的步骤：由于在<strong>2.4</strong>中已经处理并设置了最新输入的用户输入值。所以<code>textField.text</code>已经是最新的值了。</p>
+<p>然后我们用最新值的长度减去<strong>2.5</strong>中计算出光标右边该有字符长度的值，就是光标最新的位置。</p>
+<p>但是可以想象一下，重新设置光标后，我们的光标有可能是在空格的后面，建议遇到这种情况直接让光标再往前移一位以提升体验。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//创建光标(预测光标)</div><div class="line">NSRange newRange = NSMakeRange(textField.text.length - rightStrNum, 0);</div><div class="line">    </div><div class="line">//光标前字符</div><div class="line">NSRange cursorLeftRange = NSMakeRange(newRange.location - 1, 1);</div><div class="line"></div><div class="line">//遇到空格则往前移一位</div><div class="line">if (newRange.location &gt; 0) &#123;</div><div class="line">    //获取光标前一个字符</div><div class="line">    NSString *cursorLeftStr = [textField.text substringWithRange:cursorLeftRange];</div><div class="line"></div><div class="line">    if ([cursorLeftStr isEqualToString:@&quot; &quot;]) &#123;</div><div class="line">        newRange.location = newRange.location - 1;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">//设置光标</div><div class="line">[textField setSelectedRange:newRange];</div></pre></td></tr></table></figure>
+<h3 id="3-复制粘贴出现的问题"><a href="#3-复制粘贴出现的问题" class="headerlink" title="3.复制粘贴出现的问题"></a>3.复制粘贴出现的问题</h3><p>从效果上看上去，格式化跟光标定位好像没问题，但是发现在用户发生复制粘贴的场景下，光标会在不同情况下发生错乱，测试得出，是因为设置不同的键盘方式所引起的。</p>
+<p>由于我们每隔四位数字会手动追加一个空格，但是对于数字键盘来说，是不支持输入空格，所以假如遇到以下情况，是会发生问题的。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">//原本已输入</div><div class="line">1234 1</div><div class="line"></div><div class="line">//在其他地方复制的数字</div><div class="line">9876</div><div class="line"></div><div class="line">//在原来输入框发起粘贴后理论效果</div><div class="line">1234 1987 61|</div><div class="line"></div><div class="line">//在原来输入框发起粘贴后实际效果</div><div class="line">1234 1987 6|1</div></pre></td></tr></table></figure>
+<p>根本原因就是上面所说的，被复制的字符个数是四位，在原来输入的地方（<strong>1234 1</strong>）粘贴<strong>9876</strong>会因为格式而追加一个空格，字符个数变成五个，导致超过复制字符个数，并且粘贴出来的字符不支持原键盘，所以导致光标不在期待位置上。</p>
+<blockquote>
+<p>解决方案1</p>
+</blockquote>
+<p>将<code>UIKeyboardType</code>改成支持空格的类型，一般对于银行卡业务，大家都是选择数字键盘，但也有特殊情况，因为上面有介绍过滤非数字的方法，所以可以根据自身情况进行斟酌。</p>
+<blockquote>
+<p>解决方案2</p>
+</blockquote>
+<p>在设置了数字键盘的情况下，遇到复制粘贴时，则通过延时重设一次光标。但要注意的是，如果延时过长会看出光标连续跳转的情况，所以我采用了零延时设置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">//用户发生粘贴的情况</div><div class="line">if ([string isEqualToString:[UIPasteboard generalPasteboard].string]) &#123;</div><div class="line">    //0延时重设一次光标</div><div class="line">    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.0*NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">        [textField setSelectedRange:newRange];</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="4-参考源码"><a href="#4-参考源码" class="headerlink" title="4.参考源码"></a>4.参考源码</h3><p><a href="https://github.com/but819/KitCode/tree/master/BankCardNum" target="_blank" rel="external">参考源码地址</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/09/UIStackViewIntroduction/" rel="next" title="UIStackView-入门">
+                <i class="fa fa-chevron-left"></i> UIStackView-入门
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+<script>
+  var gitment = new Gitment({
+    // 根据文章标题设置唯一评论id
+    id: 'UITextField(BankCardNum)',
+    owner: 'but819',
+    repo: 'but819.github.io',
+    oauth: {
+      client_id: 'a5343d7666d1f0c7ae93',
+      client_secret: 'ee892f09d2c2857eb7f9a4b7a6a68d006612c6ed',
+    },
+  })
+  gitment.render('comments')
+</script>
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars3.githubusercontent.com/u/7900994?v=3&s=460"
+               alt="b_ut" />
+          <p class="site-author-name" itemprop="name">b_ut</p>
+           
+              <p class="site-description motion-element" itemprop="description">一名普通的iOS开发者<br>一直追求简单而又简洁的感觉</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/but819" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/but34" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:but711@163.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-前言"><span class="nav-text">1.前言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-解决思路"><span class="nav-text">2.解决思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-设置UITextField代理"><span class="nav-text">2.1 设置UITextField代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-控制用户输入类型"><span class="nav-text">2.2 控制用户输入类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-处理用户输入后的内容"><span class="nav-text">2.3 处理用户输入后的内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-重新格式化修改后的银行卡号"><span class="nav-text">2.4 重新格式化修改后的银行卡号</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-光标处理"><span class="nav-text">2.5 光标处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-设置光标"><span class="nav-text">2.6 设置光标</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-复制粘贴出现的问题"><span class="nav-text">3.复制粘贴出现的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-参考源码"><span class="nav-text">4.参考源码</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">b_ut</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv">
+      <i class="fa fa-user"></i> 访问人数
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+      人次
+    </span>
+  
+
+  
+    <span class="site-pv">
+      <i class="fa fa-eye"></i> 总访问量
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+      次
+    </span>
+  
+</div>
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("Sg0iGg7vecR9AqpdG6ixmI8c-gzGzoHsz", "siOpJyfpl9DO3iISlUY6hTML");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
