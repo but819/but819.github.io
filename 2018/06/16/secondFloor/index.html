@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="b_ut">
 <meta property="og:description" content="1.前言前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。 为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。">
 <meta property="og:image" content="http://yoursite.com/2018/06/16/secondFloor/secondFloorDetail.png">
-<meta property="og:updated_time" content="2019-02-22T19:42:09.078Z">
+<meta property="og:updated_time" content="2019-02-22T19:45:32.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="首页下拉二楼展示">
 <meta name="twitter:description" content="1.前言前段时间，各大App都比较流行在首页做一个下拉出现二楼的广告位，像淘宝二楼、京东二楼、大众点评二楼等等，各种交互都有，这次我做的是其中一种是偏向当时大众点评的效果，拉出显示背后的图片或者是Gif图，并伴随着转场效果。 为了更好的理解整个过程，我特意做了一张图方便结合下文理解。其中包括整个视图层级、用户默认看到初始状态、用户发生下拉状态、开始进入下拉状态的理解。">
@@ -447,7 +447,7 @@
 <ul>
 <li>实现自定义转场文件</li>
 </ul>
-<p>创建一个文件继承自 NSObject, 并遵守 <code>UIViewControllerAnimatedTransitioning</code>协议，暂且叫<code>TestMoveTransion</code>。以下是需要实现的方法</p>
+<p>创建一个文件继承自<code>NSObject</code>，并遵守<code>UIViewControllerAnimatedTransitioning</code>协议，暂且叫<code>TestMoveTransion</code>。以下是需要实现的方法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">//执行时间</div><div class="line">- (NSTimeInterval)transitionDuration:(nullable id&lt;UIViewControllerContextTransitioning&gt;)transitionContext&#123;</div><div class="line">    return 1.0f;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//执行内容</div><div class="line">- (void)animateTransition:(nonnull id&lt;UIViewControllerContextTransitioning&gt;)transitionContext &#123;</div><div class="line"></div><div class="line">    UIViewController *toVC   = [transitionContext viewControllerForKey:UITransitionContextToViewControllerKey];</div><div class="line">    UIView *containerView = [transitionContext containerView];</div><div class="line">    </div><div class="line">    toVC.view.frame = [transitionContext finalFrameForViewController:toVC];</div><div class="line">    toVC.view.alpha = 0;</div><div class="line">    [containerView addSubview:toVC.view];</div><div class="line">    </div><div class="line">    //单纯的执行淡化动画操作，最后一定要执行[transitionContext completeTransition:YES];代表结束</div><div class="line">    [UIView animateWithDuration:[self transitionDuration:transitionContext] animations:^&#123;</div><div class="line">        toVC.view.alpha = 1;</div><div class="line">    &#125; completion:^(BOOL finished) &#123;</div><div class="line">        [transitionContext completeTransition:YES];</div><div class="line">    &#125;];    </div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
